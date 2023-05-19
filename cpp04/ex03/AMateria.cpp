@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 20:03:40 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/19 11:38:55 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/19 20:35:53 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ AMateria::AMateria(AMateria const & src) {
 
 AMateria &	AMateria::operator=(AMateria const & rhs) {
 
-	this->type = rhs.type;
+	this->type = rhs.getType();
 	return (*this);
 }
 
@@ -46,4 +46,10 @@ AMateria::AMateria(std::string const & type) : type(type) {
 std::string	const & AMateria::getType() const {
 
 	return(this->type);
+}
+
+void	AMateria::use(ICharacter& target) {
+
+	std::cout << "* tries to do something to " << target.getName() << " but fails *" << std::endl;
+	return ;
 }

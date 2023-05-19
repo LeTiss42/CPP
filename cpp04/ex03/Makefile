@@ -1,10 +1,13 @@
 NAME = materia
 
 GXX = c++
-CFLEAGS = -std=c++98 -Wall -Werror -Wextra -pedantic -fsanitize=address
+CFLAGS = -std=c++98 -Wall -Werror -Wextra -pedantic -fsanitize=address
 
 SRC =	main.cpp \
 		AMateria.cpp\
+		Ice.cpp \
+		Cure.cpp \
+		Character.cpp \
 
 OBJ = $(SRC:%.cpp=%.o)
 

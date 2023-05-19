@@ -1,44 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   AMateria.hpp                                       :+:      :+:    :+:   */
+/*   ICharacter.hpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 19:22:05 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/19 18:57:58 by mravera          ###   ########.fr       */
+/*   Created: 2023/05/19 17:04:21 by mravera           #+#    #+#             */
+/*   Updated: 2023/05/19 18:57:25 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef AMATERIA_HPP
-# define AMATERIA_HPP
+#ifndef ICHARACTER_HPP
+# define ICHARACTER_HPP
 
 # include <iostream>
 # include <string>
-# include "ICharacter.hpp"
+# include "AMateria.hpp"
 
 //prototype pour resoudre les includes en boucle
-class ICharacter;
+class AMateria;
 
-class	AMateria {
-
-protected:
-
-	std::string	type;
+class	ICharacter {
 
 public:
 
-	AMateria(void);
-	AMateria(AMateria const & src);
-	AMateria &	operator=(AMateria const & rhs);
-	virtual ~AMateria(void);
-
-	AMateria(std::string const & type);
-
-	std::string	const & getType() const; //Returns the materia type
-
-	virtual AMateria* clone() const = 0;
-	virtual void use(ICharacter& target);
+	virtual ~ICharacter() {}
+	virtual std::string const & getName() const = 0;
+	virtual void equip(AMateria* m) = 0;
+	virtual void unequip(int idx) = 0;
+	virtual void use(int idx, ICharacter& target) = 0;
 
 };
 
