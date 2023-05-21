@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 14:12:55 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/19 15:52:07 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/22 00:10:47 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,10 @@ Ice* Ice::clone() const {
 
 	Ice* res = new(Ice);
 	return(res);
+}
+
+void	Ice::use(ICharacter& target) {
+
+	std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
+	return ;
 }

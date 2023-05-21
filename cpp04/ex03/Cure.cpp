@@ -6,13 +6,13 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 16:52:26 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/19 17:03:06 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/22 00:08:54 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cure.hpp"
 
-Cure::Cure(void) {
+Cure::Cure(void) : AMateria("cure") {
 
 	std::cout << "++ Default Cure constructor called (" << this->type << ")" << std::endl;
 	return ;
@@ -41,4 +41,10 @@ Cure* Cure::clone() const {
 
 	Cure* res = new(Cure);
 	return(res);
+}
+
+void	Cure::use(ICharacter& target) {
+
+	std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl;
+	return ;
 }

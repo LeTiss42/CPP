@@ -1,7 +1,7 @@
 NAME = materia
 
 GXX = c++
-CFLAGS = -std=c++98 -Wall -Werror -Wextra -pedantic -fsanitize=address
+CFLAGS = -std=c++98 -Wall -Werror -Wextra -pedantic #-fsanitize=address
 
 SRC =	main.cpp \
 		AMateria.cpp\

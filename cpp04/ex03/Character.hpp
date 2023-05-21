@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 18:49:48 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/19 19:47:37 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/21 22:33:18 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ class Character : public ICharacter {
 private:
 
 	std::string	name;
+	AMateria*	inv[4];
 
 public:
 
