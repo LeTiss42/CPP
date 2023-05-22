@@ -1,33 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ICharacter.hpp                                     :+:      :+:    :+:   */
+/*   MateriaSource.hpp                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/19 17:04:21 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/22 11:06:43 by mravera          ###   ########.fr       */
+/*   Created: 2023/05/22 11:21:20 by mravera           #+#    #+#             */
+/*   Updated: 2023/05/22 12:17:06 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ICHARACTER_HPP
-# define ICHARACTER_HPP
+#ifndef MATERIASOURCE_HPP
+# define MATERIASOURCE_HPP
 
-# include <iostream>
-# include <string>
-# include "AMateria.hpp"
+# include "IMateriaSource.hpp"
 
-//prototype pour resoudre les includes en boucle
-class AMateria;
+class	MateriaSource : public IMateriaSource {
 
-class ICharacter
-{
-	public:
-		virtual ~ICharacter() {}
-		virtual std::string const & getName() const = 0;
-		virtual void equip(AMateria* m) = 0;
-		virtual void unequip(int idx) = 0;
-		virtual void use(int idx, ICharacter& target) = 0;
+private:
+
+	AMateria*	inv[4];
+
+public:
+
+	MateriaSource(void);
+	MateriaSource(MateriaSource const & src);
+	MateriaSource & operator=(MateriaSource const & rhs);
+	~MateriaSource(void);
+
+	void	learnMateria(AMateria*);
+	AMateria* createMateria(std::string const & type);
+
 };
 
 #endif
