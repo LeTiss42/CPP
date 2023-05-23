@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 23:18:46 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/23 12:05:29 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/23 13:47:14 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ public:
 
 	class GradeTooHighException : public std::exception {
 		public:
-			virtual const char* high(void) const throw();
+			virtual const char* what(void) const throw();
 	};
 
 	class GradeTooLowException : public std::exception {
 		public:
-			virtual const char* low(void) const throw();
+			virtual const char* what(void) const throw();
 	};
 
 private:

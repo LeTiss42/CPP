@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 00:01:25 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/23 12:10:22 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/23 13:52:21 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ Bureaucrat::Bureaucrat( std::string str, int grade) : _name(str) {
 			this->_grade = grade;
 	}
 	catch (GradeTooLowException& l) {
-		std::cout << l.low() << "Requested grade for " << this->_name << " is too low, grade set to 150 (min)." << std::endl;
+		std::cout << l.what() << "Requested grade for " << this->_name << " is too low, grade set to 150 (min)." << std::endl;
 		this->_grade = 150;
 		return ;
 	}
 	catch (GradeTooHighException& h) {
-		std::cout << h.high() << "Requested grade for " << this->_name << " is too high, grade set to 1 (max)." << std::endl;
+		std::cout << h.what() << "Requested grade for " << this->_name << " is too high, grade set to 1 (max)." << std::endl;
 		this->_grade = 1;
 	}
 	return ;
@@ -86,7 +86,7 @@ void	Bureaucrat::incGrade( void ) {
 		return ;
 	}
 	catch (GradeTooHighException &h) {
-		std::cout << h.high() << this->_name << " has already max grade ()." << std::endl;
+		std::cout << h.what() << this->_name << " has already max grade ()." << std::endl;
 	}
 }
 
@@ -101,16 +101,16 @@ void	Bureaucrat::decGrade( void ) {
 		return ;
 	}
 	catch (GradeTooLowException &l) {
-		std::cout << l.low() << this->_name << " has already min grade (150)." << std::endl;
+		std::cout << l.what() << this->_name << " has already min grade (150)." << std::endl;
 	}
 }
 
-const char* Bureaucrat::GradeTooHighException::high(void) const throw() {
+const char* Bureaucrat::GradeTooHighException::what(void) const throw() {
 
 	return ("Error. Grade is too high.\n");
 }
 
-const char* Bureaucrat::GradeTooLowException::low(void) const throw() {
+const char* Bureaucrat::GradeTooLowException::what(void) const throw() {
 
 	return ("Error. Grade is too low.\n");
 }
