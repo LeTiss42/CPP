@@ -1,15 +1,11 @@
-NAME = animal
+NAME = exe
 
 GXX = c++
 CFLAGS = -std=c++98 -Wall -Werror -Wextra -pedantic #-fsanitize=address
 
 SRC =	main.cpp \
-		Animal.cpp \
-		WrongAnimal.cpp \
-		Dog.cpp \
-		Cat.cpp \
-		WrongCat.cpp \
-		Brain.cpp \
+		Bureaucrat.cpp \
+		Form.cpp \
 
 OBJ = $(SRC:%.cpp=%.o)
 
