@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 14:24:12 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/23 18:25:31 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/26 16:50:01 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <iostream>
 # include <string>
+# include "Bureaucrat.hpp"
+
+class Bureaucrat;
 
 class	Form {
 
@@ -30,6 +33,7 @@ public:
 	bool		getSignedUp(void) const;
 	int			getGradeSigne(void) const;
 	int			getGradeExe(void) const;
+	void		beSigned(Bureaucrat& b);
 
 	class GradeTooHighException : public std::exception {
 		public:

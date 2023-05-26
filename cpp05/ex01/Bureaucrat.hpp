@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 23:18:46 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/23 13:47:14 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/26 16:51:24 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include <iostream>
 # include <string>
+# include "Form.hpp"
+
+class Form;
 
 class	Bureaucrat {
 
@@ -31,6 +34,7 @@ public:
 	int			getGrade( void ) const;
 	void		incGrade( void );
 	void		decGrade( void );
+	void		signForm(Form& f);
 
 	class GradeTooHighException : public std::exception {
 		public:

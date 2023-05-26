@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 15:02:59 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/23 18:39:33 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/26 17:17:12 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ Form::Form(std::string name, int gradeSigne, int gradeExe) : name(name), gradeSi
 	this->signedUp = false;
 	try {
 		if ((gradeExe > 150) || (gradeSigne > 150))
-			throw GradeTooLowException();
+			throw Form::GradeTooLowException();
 		else if ((gradeExe < 1) || (gradeSigne < 1))
-			throw GradeTooHighException();
+			throw Form::GradeTooHighException();
 	}
-	catch (GradeTooLowException& l) {
+	catch (Form::GradeTooLowException& l) {
 		std::cout << l.what() << std::endl;
 		return ;
 	}
-	catch (GradeTooHighException& h) {
+	catch (Form::GradeTooHighException& h) {
 		std::cout << h.what() << std::endl;
 		return ;
 	}
@@ -77,6 +77,24 @@ int	Form::getGradeSigne(void) const {
 int	Form::getGradeExe(void) const {
 
 	return (this->gradeExe);
+}
+
+void	Form::beSigned(Bureaucrat& b) {
+
+	try {
+		if (b.getGrade() > this->getGradeSigne())
+			throw Form::GradeTooLowException()
+		else {
+			std::cout << "Form " << this->getName() << " has been signed by : " << b.getName() << std::endl;
+			this->signedUp = true;
+		}
+	}
+	catch (Form::GradeTooLowException& l) {
+		std::cout << l.what();
+		std::cout << "grade requested to sign this form is : " << this->getGradeSigne() << std::endl;
+		std::cout << "This bureaucrat has grade : " << b.getGrade() << std::endl;
+	}
+	return ;
 }
 
 const char* Form::GradeTooHighException::what(void) const throw() {
