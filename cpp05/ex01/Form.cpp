@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 15:02:59 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/26 17:17:12 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/27 12:39:43 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	Form::beSigned(Bureaucrat& b) {
 
 	try {
 		if (b.getGrade() > this->getGradeSigne())
-			throw Form::GradeTooLowException()
+			throw Form::GradeTooLowException();
 		else {
 			std::cout << "Form " << this->getName() << " has been signed by : " << b.getName() << std::endl;
 			this->signedUp = true;
