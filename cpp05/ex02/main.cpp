@@ -6,74 +6,78 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:55:18 by mravera           #+#    #+#             */
-/*   Updated: 2023/03/23 23:23:25 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/27 12:20:11 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
-#include "AAnimal.hpp"
-#include "WrongAAnimal.hpp"
-#include "Cat.hpp"
-#include "WrongCat.hpp"
-#include "Dog.hpp"
-#include "Brain.hpp"
+#include "Form.hpp"
+#include "Bureaucrat.hpp"
 
 int	main( void ) {
 
-	const AAnimal* j = new Dog();
-	const AAnimal* i = new Cat();
-	std::cout << std::endl;
-	delete j;
-	delete i;
-
-	const int	n = 4;
-	const AAnimal*	anitab[n];
+	Form*	f1 = new Form();
+	std::cout << *f1;
 	std::cout << std::endl;
 
+	Form*	f2 = new Form("SUU", 25, 30);
+	std::cout << *f2;
+	std::cout << std::endl;
 
-	for (int i = 0; i < (n/2); i++)
-		anitab[i] = new Dog();
-	for (int i = (n/2); i < n; i++)
-		anitab[i] = new Cat();
+	Form*	f3 = new Form(*f2);
+	std::cout << *f3;
 	std::cout << std::endl;
-	for (int i = 0; i < n; i++)
-	{
-		anitab[i]->makeSound();
-		delete anitab[i];
-	}
-	std::cout << std::endl;
-	Dog	doggo;
-	for (int i = 0; i < 100; i++)
-		doggo.setIdea(i, "pouet");
-	for (int i = 0; i < 100; i++)
-		std::cout <<" doggo " << i << " : " << doggo.getIdea(i) << std::endl;
-	std::cout << std::endl;
-	Dog	rex(doggo);
-	std::cout << std::endl;
-	for (int i = 0; i < 100; i++)
-		std::cout << "rex " << i << " : " << rex.getIdea(i) << std::endl;
 	
-
-	std::cout << std::endl;
-	std::cout << "doggoptr = " << &doggo <<std::endl;
-	std::cout << "rexptr   = " << &rex <<std::endl;
-	std::cout << std::endl;
-	std::cout << "doggo brain ptr = " << doggo.getBrainPtr() << std::endl;
-	std::cout << "rex   brain ptr = " << rex.getBrainPtr() << std::endl;
-	std::cout << std::endl;
-	Cat	chat;
-	Cat toto = chat;
-	std::cout << std::endl;
-	chat.makeSound();
-	toto.makeSound();
+	Form*	f4 = new Form("f4", 1, 150);
+	std::cout << *f4;
 	std::cout << std::endl;
 
-	std::cout << "chat ptr = " << &chat <<std::endl;
-	std::cout << "toto ptr = " << &toto <<std::endl;
+	*f4 = *f3;
+	std::cout << *f4;
 	std::cout << std::endl;
-	std::cout << "chat brain ptr = " << chat.getBrainPtr() << std::endl;
-	std::cout << "toto brain ptr = " << toto.getBrainPtr() << std::endl;
+
+	Form* f5 = new Form("Too low", -10, 25);
+	std::cout << *f5;
 	std::cout << std::endl;
+
+	Form* f6 = new Form("Too low2", 10, -25);
+	std::cout << *f6;
+	std::cout << std::endl;
+
+	Form* f7 = new Form("Too low3", -10, -25);
+	std::cout << *f7;
+	std::cout << std::endl;
+
+	Form* f10 = new Form(*f2);
+
+	Bureaucrat* f8 = new Bureaucrat("Too low to signe", 50);
+	Bureaucrat* f9 = new Bureaucrat("Ok to signe", 1);
+	std::cout << *f8;
+	std::cout << *f9;
+	std::cout << std::endl;
+
+	std::cout << *f2;
+	f2->beSigned(*f8);
+	std::cout << *f2;
+	f2->beSigned(*f9);
+	std::cout << *f2;
+	std::cout << std::endl;
+
+	std::cout << *f10;
+	f8->signForm(*f10);
+	std::cout << *f10;
+	f9->signForm(*f10);
+	std::cout << *f10;
+
+	delete f1;
+	delete f2;
+	delete f3;
+	delete f4;
+	delete f5;
+	delete f6;
+	delete f7;
+	delete f8;
+	delete f9;
+	delete f10;
 
 	return 0;
 }
