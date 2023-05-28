@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 00:01:25 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/23 13:52:21 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/28 18:49:21 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,12 @@ Bureaucrat::Bureaucrat( std::string str) : _name(str), _grade(150) {
 Bureaucrat::Bureaucrat( std::string str, int grade) : _name(str) {
 
 	std::cout << "+ parametric Bureaucrat constructor called (" << this->_name << ")" << std::endl;
-	try {
-		if (grade > 150)
-			throw GradeTooLowException();
-		else if (grade < 1)
-			throw GradeTooHighException();
-		else
-			this->_grade = grade;
-	}
-	catch (GradeTooLowException& l) {
-		std::cout << l.what() << "Requested grade for " << this->_name << " is too low, grade set to 150 (min)." << std::endl;
-		this->_grade = 150;
-		return ;
-	}
-	catch (GradeTooHighException& h) {
-		std::cout << h.what() << "Requested grade for " << this->_name << " is too high, grade set to 1 (max)." << std::endl;
-		this->_grade = 1;
-	}
+	if (grade > 150)
+		throw GradeTooLowException();
+	else if (grade < 1)
+		throw GradeTooHighException();
+	else
+		this->_grade = grade;
 	return ;
 }
 
@@ -78,31 +67,20 @@ int	Bureaucrat::getGrade( void ) const {
 
 void	Bureaucrat::incGrade( void ) {
 
-	try {
-		if (this->_grade > 1)
-			this->_grade--;
-		else
-			throw GradeTooHighException();
-		return ;
-	}
-	catch (GradeTooHighException &h) {
-		std::cout << h.what() << this->_name << " has already max grade ()." << std::endl;
-	}
+	if (this->_grade > 1)
+		this->_grade--;
+	else
+		throw GradeTooHighException();
+	return ;
 }
 
 void	Bureaucrat::decGrade( void ) {
 
-	try
-	{
-		if (this->_grade < 150)
-			this->_grade--;
-		else
-			throw GradeTooLowException();
-		return ;
-	}
-	catch (GradeTooLowException &l) {
-		std::cout << l.what() << this->_name << " has already min grade (150)." << std::endl;
-	}
+	if (this->_grade < 150)
+		this->_grade++;
+	else
+		throw GradeTooLowException();
+	return ;
 }
 
 const char* Bureaucrat::GradeTooHighException::what(void) const throw() {
