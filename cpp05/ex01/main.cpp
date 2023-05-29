@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:55:18 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/27 12:20:11 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/29 14:32:33 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,69 +15,70 @@
 
 int	main( void ) {
 
-	Form*	f1 = new Form();
-	std::cout << *f1;
-	std::cout << std::endl;
-
-	Form*	f2 = new Form("SUU", 25, 30);
-	std::cout << *f2;
-	std::cout << std::endl;
-
-	Form*	f3 = new Form(*f2);
-	std::cout << *f3;
-	std::cout << std::endl;
+	Form oui;
+	std::cout << "name       : " << oui.getName() << std::endl;
+	std::cout << "gradeExe   : " << oui.getGradeExe() << std::endl;
+	std::cout << "gradeSigne : " << oui.getGradeSigne() << std::endl;
+	std::cout << "signedUp   : " << oui.getSignedUp() << std::endl << std::endl;
+	try {
+		Form FormLow("MrLow", 200, 50);
+	}
+	catch (Form::GradeTooLowException& l) {
+		std::cout << l.what() << "FormLow constructor" << std::endl << std::endl;
+	}
+	try {
+		Form FormLow("MrLow2", 50, 200);
+	}
+	catch (Form::GradeTooLowException& l) {
+		std::cout << l.what() << "FormLow constructor" << std::endl << std::endl;
+	}
 	
-	Form*	f4 = new Form("f4", 1, 150);
-	std::cout << *f4;
-	std::cout << std::endl;
+	try {
+		Form FormHigh("MrHigh", 0, 50);
+	}
+	catch (Form::GradeTooHighException& l) {
+		std::cout << l.what() << "FormHigh constructor" << std::endl << std::endl;
+	}
+	try {
+		Form FormLow("MrHigh2", 50, 0);
+	}
+	catch (Form::GradeTooHighException& l) {
+		std::cout << l.what() << "FormHigh constructor" << std::endl << std::endl;
+	}
 
-	*f4 = *f3;
-	std::cout << *f4;
-	std::cout << std::endl;
+	Bureaucrat boss("Boss", 1);
+	Bureaucrat pasBoss("PasBoss", 50);
+	std::cout << boss << pasBoss << std::endl;
 
-	Form* f5 = new Form("Too low", -10, 25);
-	std::cout << *f5;
-	std::cout << std::endl;
+	Form	FormBeSignedByBoss("FormBeSignedByBoss", 1, 1);
+	std::cout << FormBeSignedByBoss << std::endl;
+	try {
+		std::cout << pasBoss.getName() << " is trying to sign " << FormBeSignedByBoss.getName() << std::endl;
+		FormBeSignedByBoss.beSigned(pasBoss);
+	}
+	catch (Form::GradeTooLowException& l) {
+		std::cout << l.what() << "FormBeSignedByBoss error" << std::endl;
+	}
+	std::cout << FormBeSignedByBoss << std::endl;
 
-	Form* f6 = new Form("Too low2", 10, -25);
-	std::cout << *f6;
-	std::cout << std::endl;
+	try {
+		std::cout << boss.getName() << " is trying to sign " << FormBeSignedByBoss.getName() << std::endl;
+		FormBeSignedByBoss.beSigned(boss);
+	}
+	catch (Form::GradeTooLowException& l) {
+		std::cout << l.what() << "no error en fait" << std::endl << std::endl;
+	}
+	std::cout << FormBeSignedByBoss << std::endl << std::endl;
+	
+	Form	FormBeSignedByBoss2("FormBeSignedByBoss2", 1, 1);
+	std::cout << FormBeSignedByBoss2 << std::endl;
+	std::cout << pasBoss.getName() << " is trying to sign " << FormBeSignedByBoss2.getName() << std::endl;
+	pasBoss.signForm(FormBeSignedByBoss2);
+	std::cout << FormBeSignedByBoss2 << std::endl;
 
-	Form* f7 = new Form("Too low3", -10, -25);
-	std::cout << *f7;
-	std::cout << std::endl;
-
-	Form* f10 = new Form(*f2);
-
-	Bureaucrat* f8 = new Bureaucrat("Too low to signe", 50);
-	Bureaucrat* f9 = new Bureaucrat("Ok to signe", 1);
-	std::cout << *f8;
-	std::cout << *f9;
-	std::cout << std::endl;
-
-	std::cout << *f2;
-	f2->beSigned(*f8);
-	std::cout << *f2;
-	f2->beSigned(*f9);
-	std::cout << *f2;
-	std::cout << std::endl;
-
-	std::cout << *f10;
-	f8->signForm(*f10);
-	std::cout << *f10;
-	f9->signForm(*f10);
-	std::cout << *f10;
-
-	delete f1;
-	delete f2;
-	delete f3;
-	delete f4;
-	delete f5;
-	delete f6;
-	delete f7;
-	delete f8;
-	delete f9;
-	delete f10;
-
+	std::cout << boss.getName() << " is trying to sign " << FormBeSignedByBoss.getName() << std::endl;
+	boss.signForm(FormBeSignedByBoss2);
+	std::cout << FormBeSignedByBoss2 << std::endl;
+	
 	return 0;
 }

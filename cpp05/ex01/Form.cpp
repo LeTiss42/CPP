@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 15:02:59 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/27 12:39:43 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/29 13:43:34 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,10 @@ Form::Form(std::string name, int gradeSigne, int gradeExe) : name(name), gradeSi
 
 	std::cout << "+ parametric Form constructor called (" << this->name << ")" << std::endl;
 	this->signedUp = false;
-	try {
-		if ((gradeExe > 150) || (gradeSigne > 150))
-			throw Form::GradeTooLowException();
-		else if ((gradeExe < 1) || (gradeSigne < 1))
-			throw Form::GradeTooHighException();
-	}
-	catch (Form::GradeTooLowException& l) {
-		std::cout << l.what() << std::endl;
-		return ;
-	}
-	catch (Form::GradeTooHighException& h) {
-		std::cout << h.what() << std::endl;
-		return ;
-	}
+	if ((gradeExe > 150) || (gradeSigne > 150))
+		throw Form::GradeTooLowException();
+	else if ((gradeExe < 1) || (gradeSigne < 1))
+		throw Form::GradeTooHighException();
 	return ;
 }
 
@@ -81,18 +71,11 @@ int	Form::getGradeExe(void) const {
 
 void	Form::beSigned(Bureaucrat& b) {
 
-	try {
-		if (b.getGrade() > this->getGradeSigne())
-			throw Form::GradeTooLowException();
-		else {
-			std::cout << "Form " << this->getName() << " has been signed by : " << b.getName() << std::endl;
-			this->signedUp = true;
-		}
-	}
-	catch (Form::GradeTooLowException& l) {
-		std::cout << l.what();
-		std::cout << "grade requested to sign this form is : " << this->getGradeSigne() << std::endl;
-		std::cout << "This bureaucrat has grade : " << b.getGrade() << std::endl;
+	if (b.getGrade() > this->getGradeSigne())
+		throw Form::GradeTooLowException();
+	else {
+		std::cout << "Form " << this->getName() << " has been signed by : " << b.getName() << std::endl;
+		this->signedUp = true;
 	}
 	return ;
 }

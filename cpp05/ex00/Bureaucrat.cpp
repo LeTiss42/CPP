@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 00:01:25 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/28 18:49:21 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/29 11:57:20 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	Bureaucrat::incGrade( void ) {
 	if (this->_grade > 1)
 		this->_grade--;
 	else
-		throw GradeTooHighException();
+		throw Bureaucrat::GradeTooHighException();
 	return ;
 }
 
@@ -79,7 +79,7 @@ void	Bureaucrat::decGrade( void ) {
 	if (this->_grade < 150)
 		this->_grade++;
 	else
-		throw GradeTooLowException();
+		throw Bureaucrat::GradeTooLowException();
 	return ;
 }
 
