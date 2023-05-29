@@ -1,17 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Form.hpp                                           :+:      :+:    :+:   */
+/*   AForm.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/23 14:24:12 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/26 16:50:01 by mravera          ###   ########.fr       */
+/*   Created: 2023/05/29 15:07:25 by mravera           #+#    #+#             */
+/*   Updated: 2023/05/29 15:07:26 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FORM_HPP
-# define FORM_HPP
+
+
+#ifndef AForm_HPP
+# define AForm_HPP
 
 # include <iostream>
 # include <string>
@@ -19,15 +21,15 @@
 
 class Bureaucrat;
 
-class	Form {
+class	AForm {
 
 public:
 
-	Form(void);
-	Form(std::string name, int gradeSigne, int gradeExe);
-	Form(Form const & src);
-	Form &	operator=(Form const & rhs);
-	~Form(void);
+	AForm(void);
+	AForm(std::string name, int gradeSigne, int gradeExe);
+	AForm(AForm const & src);
+	AForm &	operator=(AForm const & rhs);
+	~AForm(void);
 
 	std::string	getName(void) const;
 	bool		getSignedUp(void) const;
@@ -54,6 +56,6 @@ private:
 
 };
 
-std::ostream &	operator<<(std::ostream & o, Form const & rhs);
+std::ostream &	operator<<(std::ostream & o, AForm const & rhs);
 
 #endif
