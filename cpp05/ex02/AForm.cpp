@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/23 15:02:59 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/29 15:08:21 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:02:40 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,19 @@ void	AForm::beSigned(Bureaucrat& b) {
 	if (b.getGrade() > this->getGradeSigne())
 		throw AForm::GradeTooLowException();
 	else {
-		std::cout << "AForm " << this->getName() << " has been signed by : " << b.getName() << std::endl;
+		//std::cout << "AForm " << this->getName() << " has been signed by : " << b.getName() << std::endl;
 		this->signedUp = true;
 	}
+	return ;
+}
+
+void AForm::execute(Bureaucrat const & executor) const {
+
+	if (executor.getGrade() > this->getGradeExe())
+		throw AForm::GradeTooLowException();
+	if (this->signedUp == 0)
+		throw AForm::FormNotSignedUpException();
+	this->action();
 	return ;
 }
 
@@ -88,6 +98,11 @@ const char* AForm::GradeTooHighException::what(void) const throw() {
 const char* AForm::GradeTooLowException::what(void) const throw() {
 
 	return ("Error. Grade is too low.\n");
+}
+
+const char* AForm::FormNotSignedUpException::what(void) const throw() {
+
+	return ("Error. Form not signed up.\n");
 }
 
 std::ostream &	operator<<(std::ostream & o, AForm const & rhs) {

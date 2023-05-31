@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 23:18:46 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/29 15:09:08 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/31 14:54:32 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ public:
 	void		incGrade( void );
 	void		decGrade( void );
 	void		signForm(AForm& f);
+	void		executeForm(AForm const & form);
 
 	class GradeTooHighException : public std::exception {
 		public:

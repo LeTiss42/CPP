@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 00:01:25 by mravera           #+#    #+#             */
-/*   Updated: 2023/05/29 15:10:57 by mravera          ###   ########.fr       */
+/*   Updated: 2023/05/31 15:11:07 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,22 @@ void	Bureaucrat::signForm(AForm& f) {
 	}
 	catch (AForm::GradeTooLowException& l) {
 		std::cout << this->_name << " couldn't sign " << f.getName() << " because " << l.what();
+	}
+	return ;
+}
+
+void	Bureaucrat::executeForm(AForm const & form) {
+
+	try {
+		std::cout << this->getName() << " is trying to execute : " << form.getName() << std::endl;
+		form.execute(*this);
+		std::cout << this->getName() << " executed " << form.getName() << std::endl;
+	}
+	catch (AForm::GradeTooLowException& l) {
+		std::cout << l.what() << std::endl;
+	}
+	catch (AForm::FormNotSignedUpException& s) {
+		std::cout << s.what() << std::endl;
 	}
 	return ;
 }
