@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 15:33:08 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/02 19:39:56 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/02 21:15:02 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,11 @@ void ScalarConverter::convert(std::string s) {
 
 	if (ScalarConverter::isChar(s) == 1) {
 		std::cout << "char: " << s[0] << std::endl;
-		std::cout << "int : " << static_cast<int>(s[0]) << std::endl;
-		std::cout << "float: " << static_cast<float>(s[0]) << std::endl;
-		std::cout << "double: " << static_cast<double>(s[0]) << std::endl;
+		std::cout << "int: " << static_cast<int>(s[0]) << std::endl;
+		std::cout << "float: " << static_cast<float>(s[0]) << ".0f" << std::endl;
+		std::cout << "double: " << static_cast<double>(s[0]) << ".0" << std::endl;
 	}
-	else
-		std::cout << "not a char" << std::endl;
+	std::cout << s << " = " << ScalarConverter::getType(s) << std::endl;
 	return ;
 }
 
@@ -56,4 +55,18 @@ int	ScalarConverter::isChar(std::string s) {
 		return (1);
 	else
 		return (0);
+}
+
+//retourne le type de s : 1=char 2=int 3=float 4=double 0=error
+int	ScalarConverter::getType(std::string s) {
+
+	if (ScalarConverter::isChar(s) == 1)
+		return 1;
+	if ((s.find_first_not_of("0123456789") == std::string::npos) ||
+		((s.size() > 1) && (s[0] == '-') && s.find_first_not_of("0123456789", 1) == std::string::npos))
+		return 2;
+	if (((s.find_first_not_of("0123456789") == s.find_last_not_of("0123456789")) && (s[s.find_first_not_of("0123456789")] == '.')) ||
+		((s[s.find_first_not_of("0123456789")] == '-') && (s.find_first_not_of("0123456789", 1) == s.find_last_not_of("0123456789")) && (s[s.find_last_not_of("0123456789")] == '.')))
+		return 4;
+	return (0);
 }
