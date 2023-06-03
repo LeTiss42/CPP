@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 15:33:08 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/03 01:27:06 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/03 12:38:21 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,30 @@ ScalarConverter::~ScalarConverter( void ) {
 
 void ScalarConverter::convert(std::string s) {
 
-	if (ScalarConverter::isChar(s) == 1) {
-		std::cout << "char: " << s[0] << std::endl;
-		std::cout << "int: " << static_cast<int>(s[0]) << std::endl;
-		std::cout << "float: " << static_cast<float>(s[0]) << ".0f" << std::endl;
-		std::cout << "double: " << static_cast<double>(s[0]) << ".0" << std::endl;
-	}
-	std::cout << s << " = " << ScalarConverter::getType(s) << std::endl;
+
+	switch(ScalarConverter::getType(s)) {
+		case 0:
+			std::cout << "error" << std::endl;
+			break;
+		case 1:
+			std::cout << "char: " << s[0] << std::endl;
+			std::cout << "int: " << static_cast<int>(s[0]) << std::endl;
+			std::cout << "float: " << static_cast<float>(s[0]) << ".0f" << std::endl;
+			std::cout << "double: " << static_cast<double>(s[0]) << ".0" << std::endl;
+			break;
+		case 2:
+			std::cout << "int" << std::endl;
+			break;
+		case 3:
+			std::cout << "float" << std::endl;
+			break;
+		case 4:
+			std::cout << "double" << std::endl;
+			break;
 	return ;
+	}
 }
+
 
 int	ScalarConverter::isChar(std::string s) {
 
@@ -72,4 +87,21 @@ int	ScalarConverter::getType(std::string s) {
 		((s[s.find_first_not_of("0123456789")] == '-') && (s.find_first_not_of("0123456789", 1) == s.find_last_not_of("0123456789")) && (s[s.find_last_not_of("0123456789")] == '.')))
 		return 4;
 	return (0);
+}
+
+void ScalarConverter::dispInt(std::string s) {
+
+	int		theInt;
+	double	theDouble;
+	char	theChar;
+
+	if (s.size() > 100) {
+		std::cout << "out of range" << std::endl;
+		return;
+	}
+	theDouble = strtod(s.c_str(), 0);
+	if (theDouble > INT_MAX || theDouble < INT_MIN) {
+		std::cout << "out of range" << std::endl;
+		return;
+	}
 }

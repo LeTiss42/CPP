@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 15:33:11 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/02 21:05:09 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/03 12:05:28 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ public:
 	static void	convert(std::string s);
 	static int	isChar(std::string s);
 	static int	getType(std::string s);
+	static void	dispInt(std::string s);
 
 };
 
