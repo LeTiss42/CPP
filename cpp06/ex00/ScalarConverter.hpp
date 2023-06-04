@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 15:33:11 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/04 14:05:04 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/04 16:51:13 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <cctype>
 # include <cstdlib>
 # include <climits>
+# include <float.h>
 
 class	ScalarConverter {
 
@@ -29,9 +30,15 @@ public:
 	~ScalarConverter( void );
 
 	static void	convert(std::string s);
+
+private:
+
 	static int	isChar(std::string s);
 	static int	getType(std::string s);
 	static void	dispInt(std::string s);
+	static void dispFloat(std::string s);
+	static void dispDouble(std::string s);
+	static void dispSpe(std::string s);
 
 };
 
