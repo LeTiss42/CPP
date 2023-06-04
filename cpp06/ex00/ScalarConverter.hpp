@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 15:33:11 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/03 12:05:28 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/04 14:05:04 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <string.h>
 # include <cctype>
 # include <cstdlib>
+# include <climits>
 
 class	ScalarConverter {
 
