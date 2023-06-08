@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 19:43:33 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/08 17:28:23 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/08 17:37:57 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,18 @@ int main(int, char**)
 
 	std::cout << "displaying tab" << std::endl;
 	numbers.disp();
+	std::cout << std::endl;
+	for (int i = 0; i < 10; i++)
+		std::cout << "[" << i << "] = [" << mirror[i] << "]" << std::endl;
     for (int i = 0; i < MAX_VAL; i++)
     {
         numbers[i] = rand();
     }
-	std::cout << "displaying after new random call" << std::endl;
+	std::cout << std::endl << "displaying after new random call" << std::endl << std::endl;
 	numbers.disp();
+	std::cout << std::endl;
+	for (int i = 0; i < 10; i++)
+		std::cout << "[" << i << "] = [" << mirror[i] << "]" << std::endl;
     delete [] mirror;//
     return 0;
 }
