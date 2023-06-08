@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 19:54:16 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/08 01:00:19 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/08 17:15:26 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,18 @@ public:
 	Array(unsigned int n);
 	Array(Array const & src);
 	Array &	operator=(Array const & rhs);
+	T & operator[](size_t i);
 	~Array(void);
 
-	void	size(void);
+	size_t	size(void) const;
+	void	disp(void) const;
 
 private:
-	T		tab[];
-	size_t	tabSize;
+	T		*_content;
+	size_t	_size;
 
 };
+
+# include "Array.tpp"
 
 #endif
