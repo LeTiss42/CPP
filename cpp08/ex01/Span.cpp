@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 00:20:40 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/09 03:18:37 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/09 13:31:21 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ Span::Span(Span const & src) {
 
 	this->_N = src._N;
 	this->_content = src._content;
-	*this = src;
 	//std::cout << "+(=) Copy Span constructor called" << std::endl;
 	return ;
 }
@@ -39,6 +38,7 @@ Span & Span::operator=(Span const & rhs) {
 
 	this->_N = rhs._N;
 	this->_content = rhs._content;
+	//std::cout << "span operator= called" << std::endl;
 	return (*this);
 }
 
