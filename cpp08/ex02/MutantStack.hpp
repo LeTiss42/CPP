@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 13:50:59 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/09 14:36:23 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/10 16:59:59 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 # define MUTANTSTACK_HPP
 
 # include <stack>
-#include <iostream>
+# include <iostream>
+
+//stacks are container adaptors and needs specific container class as underlying container.
+//if no other container is specified when calling a stack (as below), the "deque" standard
+//container is used.
 
 template <typename T>
 class MutantStack : public std::stack<T> {
@@ -25,6 +29,10 @@ public:
 	MutantStack(MutantStack const & src);
 	MutantStack & operator=(MutantStack const & rhs);
 	~MutantStack(void);
+
+	typedef typename std::stack<T>::container_type::iterator	iterator;
+	typename std::stack<T>::container_type::iterator	begin(void);
+	iterator	end(void);
 
 };
 
