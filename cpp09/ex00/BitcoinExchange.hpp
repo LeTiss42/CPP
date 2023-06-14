@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:07:20 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/13 16:50:51 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/14 16:44:42 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <map>
 # include <string>
 # include <fstream>
+# include <sstream>
 
 class BitChange {
 
@@ -31,14 +32,15 @@ public:
 	int		exchange(std::string filename);
 	void	dispData(void);
 
-	typedef std::map<std::string, std::string>::iterator	iter;
+	typedef std::map<int, double>::iterator					iter;
 
 private:
 
-	std::string						_dataSetName;
-	std::map<std::string, std::string>	_map;
+	std::string							_dataSetName;
+	std::map<int, double>				_map;	//test with int/float format
 
-	int		readCsv(void);
+	int		readCsv(void);							//for string map format
+	int		checkDate(std::string str);
 
 };
 
