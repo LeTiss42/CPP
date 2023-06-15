@@ -175,7 +175,15 @@ int	BitChange::checkm(std::string month) {
 
 int	BitChange::checkd(std::string day, int month) {
 
+	size_t		pos = day.find_first_not_of("0123456789");
+	std::string	buf = day.substr(0, pos);
+	if (buf.size() != 2 || (month > 12) || (month <= 0) || (atoi(buf.c_str()) > 31)
+		|| ( (month <= 7) && (month % 2 == 0) && (atoi(buf.c_str()) > 30) )
+		|| ( (month >= 8) && (month % 2 == 1) && (atoi(buf.c_str()) > 30) )
+		|| ( (month == 2) && (atoi(buf.c_str()) > 29)) )
+		return 1;
 	std::cout << "checkd() -> month = " << month << std::endl;
 	std::cout << "checkd() -> day = " << day << std::endl;
+	std::cout << "checkd() -> buf = " << buf << std::endl;
 	return 0;
 }
