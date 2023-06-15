@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:07:20 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/14 16:44:42 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/15 14:47:21 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ private:
 
 	int		readCsv(void);							//for string map format
 	int		checkDate(std::string str);
+	int		dispThune(std::string filename);
+	int		checky(std::string year);
+	int		checkm(std::string month);
+	int		checkd(std::string day, int month);
 
 };
 

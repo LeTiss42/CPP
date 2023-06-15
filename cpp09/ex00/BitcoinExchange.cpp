@@ -47,8 +47,10 @@ BitChange::~BitChange(void) {
 void	BitChange::dispData(void) {
 
 	std::cout << "---data---" << std::endl;
-	for (BitChange::iter it = _map.begin(); it != _map.end(); it++) {
+	BitChange::iter		it = _map.begin();
+	while (it != _map.end()) {
 		std::cout << std::setprecision(10) << it->first << " - " << it->second << std::endl;
+		it ++;
 	}
 	return ;
 }
@@ -69,7 +71,7 @@ int	BitChange::readCsv(void) {
 		std::getline(myfile, buff);
 		while(std::getline(myfile, buff))
 			try {
-				//old fashioned parsong with good old friend atoi.
+				//old fashioned parsing with good old friend atoi. The date is parsed as an int for easy comparison
 				date = atoi(buff.substr(0, 4).c_str()) * 10000 + atoi(buff.substr(5, 2).c_str()) * 100 + atoi(buff.substr(8, 2).c_str());
 				//strtof is C++11 but strtod seems to be C++98 compatible.
 				value = std::strtod(buff.substr(11, std::string::npos).c_str(), NULL);
@@ -94,24 +96,34 @@ int	BitChange::exchange(std::string filename) {
 	std::fstream	myfile;
 	std::string		buff;
 
-	myfile.open(filename, std::ios::in);
-	if (!myfile.is_open()) {
-		std::cout << "Error in function exchange() => " << strerror(errno) << std::endl;
-		return 1;
-	}
-	std::cout << "----- " << filename << " has been successfully opened. -----" << std::endl;
 	if (this->readCsv()) {
 		std::cout << "Error while parsing " << this->_dataSetName << " as dataset." << std::endl;
 		return 1;
 	}
 	std::cout << "----- " << this->_dataSetName << " has been parsed with success. -----" << std::endl;
-	/*
-	std::getline(myfile, buff); //skip first line to avoid working on the columns' name
-	while (std::getline(myfile, buff)) {
-		BitChange::checkDate(buff);
-		//BitChange::checkValue(buff);
+	this->dispThune(filename);
+	std::cout << "----- THE END -----" << std::endl;
+	return 0;
+}
+
+int	BitChange::dispThune(std::string filename) {
+
+	std::fstream	myfile;
+	std::string		buff;
+
+	myfile.open(filename, std::ios::in);
+	if (!myfile.is_open()) {
+		std::cout << "Error in function dispThune() => " << strerror(errno) << std::endl;
+		return 1;
 	}
-	*/
+	std::cout << "----- " << filename << " has been opened with success. -----" << std::endl;
+	//First line should not get parsed as it should contain only the name of the columns
+	std::getline(myfile, buff);
+	while(std::getline(myfile, buff)) {
+		std::cout << buff << std::endl;
+		if (this->checkDate(buff))
+			std::cout << "Error: bad input => " << buff << std::endl;
+	}
 	return 0;
 }
 
@@ -119,16 +131,51 @@ int	BitChange::checkDate(std::string str) {
 	
 	std::string res;
 	std::string buf;
+	size_t		pos;
 
-	buf = str.substr(0, str.find_first_not_of("0123456789"));
-	if (buf.size() == 4 && atoi(buf.c_str()) < 2023) {
-		res.append(buf);
-		buf = str.substr(str.find_first_not_of("0123456789") + 1, (str.find_first_not_of("0123456789", 5) + 1) - str.find_first_not_of("0123456789"));
-		std::cout << buf << std::endl;
-		if (buf.size() != 2) {
-			res.append("-" + buf);
-		}
-	}
-	std::cout << "Error: bad input => [" << res << "] => " << str << std::endl;
+	pos = str.find_first_not_of("0123456789");
+	buf = str.substr(0, pos);
+	std::cout << "chackdate() -> buf = " << buf << std::endl;
+	if (buf.size() != 4 || BitChange::checky(buf))
+		return 1;
+	res = buf;
+	if (str[pos++] != '-')
+		return 1;
+	buf = str.substr(pos);
+	if (BitChange::checkm(buf))
+		return 1;
+	return 0;
+}
+
+int	BitChange::checky(std::string year) {
+
+	int	y = atoi(year.c_str());
+	if (y < 2009)
+		return 1;
+	return 0;
+}
+
+int	BitChange::checkm(std::string month) {
+
+	size_t		pos = month.find_first_not_of("0123456789");
+	std::string buf = month.substr(0, pos);
+	int			m;
+
+	std::cout << "checkm() -> buf = " << month << std::endl;
+	std::cout << "checkm() -> month = " << buf << std::endl;
+	if (buf.size() != 2 || atoi(buf.c_str()) > 12 || month[pos++] != '-')
+		return 1;
+	m = atoi(buf.c_str());
+	buf = month.substr(pos);
+	std::cout << "checkm() -> day = " << buf << std::endl;
+	if (BitChange::checkd(buf, m))
+		return 1;
+	return 0;
+}
+
+int	BitChange::checkd(std::string day, int month) {
+
+	std::cout << "checkd() -> month = " << month << std::endl;
+	std::cout << "checkd() -> day = " << day << std::endl;
 	return 0;
 }
