@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:07:20 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/15 14:47:21 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/16 14:46:26 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,13 @@ public:
 private:
 
 	std::string							_dataSetName;
-	std::map<int, double>				_map;	//test with int/float format
+	std::map<int, double>				_map;
 
-	int		readCsv(void);							//for string map format
-	int		checkDate(std::string str);
+	int		readCsv(void);
 	int		dispThune(std::string filename);
-	int		checky(std::string year);
-	int		checkm(std::string month);
-	int		checkd(std::string day, int month);
+	int		checkDate(std::string str);
+	int		checkm(std::string month, std::string *res);
+	int		checkd(std::string day, int month, std::string *res);
 
 };
 

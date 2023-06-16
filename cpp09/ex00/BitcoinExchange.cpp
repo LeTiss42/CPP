@@ -135,55 +135,42 @@ int	BitChange::checkDate(std::string str) {
 
 	pos = str.find_first_not_of("0123456789");
 	buf = str.substr(0, pos);
-	std::cout << "chackdate() -> buf = " << buf << std::endl;
-	if (buf.size() != 4 || BitChange::checky(buf))
+	if (buf.size() != 4 || (atoi(buf.c_str()) < 2009) || (str[pos++] != '-'))
 		return 1;
 	res = buf;
-	if (str[pos++] != '-')
-		return 1;
 	buf = str.substr(pos);
-	if (BitChange::checkm(buf))
+	if (BitChange::checkm(buf, &res))
 		return 1;
+	BitChange::checkValue(res);
 	return 0;
 }
 
-int	BitChange::checky(std::string year) {
-
-	int	y = atoi(year.c_str());
-	if (y < 2009)
-		return 1;
-	return 0;
-}
-
-int	BitChange::checkm(std::string month) {
+int	BitChange::checkm(std::string month, std::string *res) {
 
 	size_t		pos = month.find_first_not_of("0123456789");
 	std::string buf = month.substr(0, pos);
 	int			m;
 
-	std::cout << "checkm() -> buf = " << month << std::endl;
-	std::cout << "checkm() -> month = " << buf << std::endl;
 	if (buf.size() != 2 || atoi(buf.c_str()) > 12 || month[pos++] != '-')
 		return 1;
+	res->append(buf);
 	m = atoi(buf.c_str());
 	buf = month.substr(pos);
-	std::cout << "checkm() -> day = " << buf << std::endl;
-	if (BitChange::checkd(buf, m))
+	if (BitChange::checkd(buf, m, res))
 		return 1;
 	return 0;
 }
 
-int	BitChange::checkd(std::string day, int month) {
+int	BitChange::checkd(std::string day, int month, std::string *res) {
 
 	size_t		pos = day.find_first_not_of("0123456789");
 	std::string	buf = day.substr(0, pos);
-	if (buf.size() != 2 || (month > 12) || (month <= 0) || (atoi(buf.c_str()) > 31)
-		|| ( (month <= 7) && (month % 2 == 0) && (atoi(buf.c_str()) > 30) )
-		|| ( (month >= 8) && (month % 2 == 1) && (atoi(buf.c_str()) > 30) )
-		|| ( (month == 2) && (atoi(buf.c_str()) > 29)) )
+	int			d   = atoi(buf.c_str());
+	if (buf.size() != 2 || (month > 12) || (month <= 0) || (d > 31)
+		|| ( (month <= 7) && (month % 2 == 0) && (d > 30) )
+		|| ( (month >= 8) && (month % 2 == 1) && (d > 30) )
+		|| ( (month == 2) && (d > 29)) )
 		return 1;
-	std::cout << "checkd() -> month = " << month << std::endl;
-	std::cout << "checkd() -> day = " << day << std::endl;
-	std::cout << "checkd() -> buf = " << buf << std::endl;
+	res->append(buf);
 	return 0;
 }
