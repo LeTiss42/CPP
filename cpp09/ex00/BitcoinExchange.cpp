@@ -141,7 +141,7 @@ int	BitChange::checkDate(std::string str) {
 	buf = str.substr(pos);
 	if (BitChange::checkm(buf, &res))
 		return 1;
-	BitChange::checkValue(res);
+	BitChange::checkValue(atoi(res.c_str());
 	return 0;
 }
 
@@ -172,5 +172,17 @@ int	BitChange::checkd(std::string day, int month, std::string *res) {
 		|| ( (month == 2) && (d > 29)) )
 		return 1;
 	res->append(buf);
+	return 0;
+}
+
+int	BitChange::checkValue(int date) {
+
+	std::map<int, double>::iterator it;
+
+	it = this->_map.find(date);
+	if(it == this->_map.end()) {
+		for(std::map<int, double>::iterator i = this->_map.begin(); i != this->_map.end(); i++) {
+		}
+	std::cout << "test" << std::endl;
 	return 0;
 }

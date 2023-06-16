@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:07:20 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/16 14:46:26 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/16 15:29:08 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ private:
 	int		checkDate(std::string str);
 	int		checkm(std::string month, std::string *res);
 	int		checkd(std::string day, int month, std::string *res);
+	int		checkValue(int date);
 
 };
 
