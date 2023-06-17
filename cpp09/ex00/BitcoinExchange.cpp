@@ -110,6 +110,7 @@ int	BitChange::dispThune(std::string filename) {
 
 	std::fstream	myfile;
 	std::string		buff;
+	int				date;
 
 	myfile.open(filename, std::ios::in);
 	if (!myfile.is_open()) {
@@ -120,9 +121,11 @@ int	BitChange::dispThune(std::string filename) {
 	//First line should not get parsed as it should contain only the name of the columns
 	std::getline(myfile, buff);
 	while(std::getline(myfile, buff)) {
-		std::cout << buff << std::endl;
-		if (this->checkDate(buff))
+		date = this->checkDate(buff);
+		if (!date || date < this->_map.begin()->first)
 			std::cout << "Error: bad input => " << buff << std::endl;
+		else
+			this->dispValue(date, buff);
 	}
 	return 0;
 }
@@ -139,10 +142,7 @@ int	BitChange::checkDate(std::string str) {
 		return 1;
 	res = buf;
 	buf = str.substr(pos);
-	if (BitChange::checkm(buf, &res))
-		return 1;
-	BitChange::checkValue(atoi(res.c_str());
-	return 0;
+	return(BitChange::checkm(buf, &res));
 }
 
 int	BitChange::checkm(std::string month, std::string *res) {
@@ -156,9 +156,7 @@ int	BitChange::checkm(std::string month, std::string *res) {
 	res->append(buf);
 	m = atoi(buf.c_str());
 	buf = month.substr(pos);
-	if (BitChange::checkd(buf, m, res))
-		return 1;
-	return 0;
+	return (BitChange::checkd(buf, m, res));
 }
 
 int	BitChange::checkd(std::string day, int month, std::string *res) {
@@ -166,23 +164,62 @@ int	BitChange::checkd(std::string day, int month, std::string *res) {
 	size_t		pos = day.find_first_not_of("0123456789");
 	std::string	buf = day.substr(0, pos);
 	int			d   = atoi(buf.c_str());
+
 	if (buf.size() != 2 || (month > 12) || (month <= 0) || (d > 31)
 		|| ( (month <= 7) && (month % 2 == 0) && (d > 30) )
 		|| ( (month >= 8) && (month % 2 == 1) && (d > 30) )
 		|| ( (month == 2) && (d > 29)) )
-		return 1;
+		return 0;
 	res->append(buf);
-	return 0;
+	return (atoi(res->c_str()));
 }
 
-int	BitChange::checkValue(int date) {
+int	BitChange::dispValue(int date, std::string buff) {
 
 	std::map<int, double>::iterator it;
+	std::map<int, double>::iterator itbuf;
+	double							value;
 
 	it = this->_map.find(date);
 	if(it == this->_map.end()) {
-		for(std::map<int, double>::iterator i = this->_map.begin(); i != this->_map.end(); i++) {
+		itbuf = this->_map.begin();
+		while(itbuf != this->_map.end() && (itbuf->first < date)) {
+			it = itbuf;
+			itbuf++;
 		}
-	std::cout << "test" << std::endl;
+	}
+	value = this->checkValue(buff);
+	if (value >= 0)
+		std::cout << buff.substr(0, 10) << " => " << buff.substr(13, std::string::npos) << " = " << (it->second * value) << std::endl;
 	return 0;
+}
+
+double	BitChange::checkValue(std::string buff) {
+
+	std::string	s;
+	double		res;
+
+	try {
+		s = buff.substr(13, std::string::npos);
+	}
+	catch (const std::out_of_range& oor) {
+		std::cout << "Error: bad input => " << buff << std::endl;
+		return (-1);
+	}
+	if (s.find_first_not_of("-.0123456789") != std::string::npos
+		|| (s.find_first_of(".") != s.find_last_of("."))
+		|| ( (s.find_first_of("-") != 0) && (s.find_first_of("-") != std::string::npos) ) ) {
+		std::cout << "Error: bad input => " << buff << std::endl;
+		return (-1);
+	}
+	res = strtod(s.c_str(), NULL);
+	if (res > 1000) {
+		std::cout << "Error: too large number." << std::endl;
+		return (-1);
+	}
+	if (res < 0) {
+		std::cout << "Error: not a positive number." << std::endl;
+		return -1;
+	}
+	return (res);
 }
