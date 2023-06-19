@@ -71,7 +71,7 @@ int	BitChange::readCsv(void) {
 		std::getline(myfile, buff);
 		while(std::getline(myfile, buff))
 			try {
-				//old fashioned parsing with good old friend atoi. The date is parsed as an int for easy comparison
+				//old fashioned parsing with good old friend atoi. The date is parsed as an int for easy comparison. Should probably use std::tm struct in <ctime>.
 				date = atoi(buff.substr(0, 4).c_str()) * 10000 + atoi(buff.substr(5, 2).c_str()) * 100 + atoi(buff.substr(8, 2).c_str());
 				//strtof is C++11 but strtod seems to be C++98 compatible.
 				value = std::strtod(buff.substr(11, std::string::npos).c_str(), NULL);
