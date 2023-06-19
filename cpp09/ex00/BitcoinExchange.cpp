@@ -114,7 +114,7 @@ int	BitChange::dispThune(std::string filename) {
 
 	myfile.open(filename, std::ios::in);
 	if (!myfile.is_open()) {
-		std::cout << "Error in function dispThune() => " << strerror(errno) << std::endl;
+		std::cout << filename << " : " << strerror(errno) <<std::endl;
 		return 1;
 	}
 	std::cout << "----- " << filename << " has been opened with success. -----" << std::endl;
