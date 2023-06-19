@@ -180,6 +180,7 @@ int	BitChange::dispValue(int date, std::string buff) {
 	std::map<int, double>::iterator itbuf;
 	double							value;
 
+	//map.lowerbound() fait exactement ce qui suit
 	it = this->_map.find(date);
 	if(it == this->_map.end()) {
 		itbuf = this->_map.begin();
