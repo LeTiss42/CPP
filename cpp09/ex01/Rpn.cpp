@@ -6,53 +6,90 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/20 16:38:14 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:52:09 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Rpn.hpp"
 
-
-
 int	Rpn::exec(std::string str) {
 
 	std::istringstream	ss(str);
 	std::string			buf;
-	int					i = 0;
+	int					res = 0;
 
 	while (ss >> buf) {
-		std::cout << "[" << i++ << "] " << buf << std::endl;
 		if (buf.size() != 1) {
 			std::cout << "Error: this program can only handle single character numbers or tokens." << std::endl;
 			return 1;
 		}
 		switch(Rpn::detect(buf)) {
 			case 1:
-				std::cout << "It's a number." << std::endl;
-				this->_data.push(buf[0]);
+				this->_data.push(atoi(buf.c_str()));
 				break;
 			case 2:
-				std::cout << "It's a token." << std::endl;
-				Rpn::ope(buf[0]);
+				Rpn::ope(this->isToken(*buf.c_str()));
 				break;
 			case 0:
 				std::cout << "Error: unknown token." << std::endl;
+				return 1;
+		}
+	}
+	if(this->_data.empty())
+		std::cout << "Error." << std::endl;
+	res = this->_data.top();
+	this->_data.pop();
+	if(!this->_data.empty()) {
+		std::cout << "Error." << std::endl;
+		return 1;
+	}
+	std::cout << res << std::endl;
+	return 0;
+}
+
+int Rpn::ope(int token) {
+
+	int	buf;
+
+	if(!this->_data.empty()) {
+		buf = this->_data.top();
+		this->_data.pop();
+	}
+	if(!this->_data.empty()) {
+		switch(token) {
+			case 1:
+				buf = this->_data.top() + buf;
+				break;
+			case 2:
+				buf = this->_data.top() - buf;
+				break;
+			case 3:
+				buf = this->_data.top() * buf;
+				break;
+			case 4:
+				buf = this->_data.top() / buf;
 				break;
 		}
+	this->_data.pop();
+	this->_data.push(buf);
+	}
+	else {
+		std::cout << "Error." << std::endl;
+		return 1;
 	}
 	return 0;
 }
 
-int Rpn::ope(char token) {
+int Rpn::isToken(char c) {
 
-	std::cout << "operation oui avec: " << token << std::endl;
-	return 0;
-}
-
-int Rpn::isToken(int c) {
-
-	if(c == '+' || c == '-' || c == '*' || c == '/')
+	if (c == '+')
 		return 1;
+	if (c == '-')
+		return 2;
+	if (c == '*')
+		return 3;
+	if (c == '/')
+		return 4;
 	return 0;
 }
 
@@ -60,10 +97,21 @@ int	Rpn::detect(std::string str) {
 
 	if(isdigit(str[0]))
 		return 1;
-	else if(isToken(str[0]))
+	else if(isToken(str[0]) != 0)
 		return 2;
 	else
 		return 0;
+}
+
+void	Rpn::disp_stack(void) {
+
+	std::cout << "stack content :" << std::endl;
+	while(!this->_data.empty()) {
+		std::cout << " " << this->_data.top();
+		this->_data.pop();
+	}
+	std::cout << std::endl;
+	return ;
 }
 
 Rpn::Rpn(void) {

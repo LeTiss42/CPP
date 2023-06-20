@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:36 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/20 16:37:06 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/20 19:45:07 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ private:
 
 	std::stack<int>	_data;
 
-	int	detect(std::string str);
-	int	isToken(int	c);
-	int	ope(char token);
+	int		detect(std::string str);
+	int		isToken(char c);
+	int		ope(int token);
+	void	disp_stack(void);
 
 };
 
