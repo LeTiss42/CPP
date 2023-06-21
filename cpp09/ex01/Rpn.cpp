@@ -6,10 +6,11 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/20 19:52:09 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/21 10:18:40 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdexcept>
 #include "Rpn.hpp"
 
 int	Rpn::exec(std::string str) {
@@ -28,15 +29,18 @@ int	Rpn::exec(std::string str) {
 				this->_data.push(atoi(buf.c_str()));
 				break;
 			case 2:
-				Rpn::ope(this->isToken(*buf.c_str()));
+				if (Rpn::ope(this->isToken(*buf.c_str())))
+					return 1;
 				break;
 			case 0:
 				std::cout << "Error: unknown token." << std::endl;
 				return 1;
 		}
 	}
-	if(this->_data.empty())
+	if(this->_data.empty()) {
 		std::cout << "Error." << std::endl;
+		return 1;
+	}
 	res = this->_data.top();
 	this->_data.pop();
 	if(!this->_data.empty()) {
@@ -67,6 +71,10 @@ int Rpn::ope(int token) {
 				buf = this->_data.top() * buf;
 				break;
 			case 4:
+			 	if(buf == 0) {
+					std::cout << "Error, division by zero." << std::endl;
+					return 1;
+				}
 				buf = this->_data.top() / buf;
 				break;
 		}
