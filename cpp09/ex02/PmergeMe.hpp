@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:36 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/22 12:18:38 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/22 15:16:40 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 # define PMERGEME_HPP
 
 # include <iostream>
-# include <sstream>
-# include <stack>
 # include <cmath>
+# include <vector>
 
 class PmergeMe {
 
@@ -31,6 +30,8 @@ public:
 	int	jacob(int n);
 
 private:
+
+	std::vector<int> myvector;
 
 };
 
