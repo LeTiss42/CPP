@@ -6,11 +6,10 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/21 10:18:40 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/21 11:53:55 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdexcept>
 #include "Rpn.hpp"
 
 int	Rpn::exec(std::string str) {
