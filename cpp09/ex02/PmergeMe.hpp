@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:36 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/22 15:16:40 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/22 23:01:05 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <iostream>
 # include <cmath>
 # include <vector>
+# include <sstream>
 
 class PmergeMe {
 
@@ -32,6 +33,8 @@ public:
 private:
 
 	std::vector<int> myvector;
+
+	int	parsing(std::string str);
 
 };
 

@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:05:44 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/22 12:26:33 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/22 23:30:50 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,15 @@
 
 int main(int argc, char **argv) {
 
-	if (argc == 2) {
-		int	i = 0;
-
-		(void)argv;
-		std::cout << "----- PmergeMe -----" << std::endl;
-		while(i <= 20) {
-			PmergeMe	a;
-			std::cout << a.jacob(i) << ", ";
-			i++;
-		}
-	}
-	else
+	if (argc != 2) {
 		std::cout << "This program needs exactly one string as argument" << std::endl;
+		return 0;
+	}
+	std::cout << "----- PmergeMe -----" << std::endl;
+
+	PmergeMe a;
+	a.exec(argv[1]);
+
 	std::cout << "----- THE END! -----" << std::endl;
 	return 0;
 }
