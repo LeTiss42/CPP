@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/23 10:44:33 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/23 15:43:50 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ int	PmergeMe::exec(std::string str) {
 	this->dispVec();
 	this->doubleUp();
 	this->dispVec();
+	this->bigSort();
+	this->dispVec();
+
 	return 0;
 }
 
@@ -68,9 +71,12 @@ int	PmergeMe::parsing(std::string str) {
 	return 0;
 }
 
+//This function just sort the 2 numbers in each pair of the vector container.
+//ex : [5 1 4 3] -> [1 5 3 4]
 int	PmergeMe::doubleUp(void) {
 
 	int buf;
+
 	if (this->myvector.size() <= 1)
 		return 0;
 	for(size_t i = 1; i < this->myvector.size(); i += 2) {
@@ -83,7 +89,36 @@ int	PmergeMe::doubleUp(void) {
 	return 0;
 }
 
-//this function uses a closed-form equation of the Jacobsthal numbers
+//This function sorts each pair looking at the biggest number of each.
+//The biggest numbers will be sorted while the smallest ones of each pair will not.
+//ex : [1 5 3 4] -> [1 4 3 5]
+int	PmergeMe::bigSort(void) {
+
+	size_t i = 3;
+	int bufa;
+	int	bufb;
+
+	if(this->myvector.size() < 4)
+		return 1;
+	while(i < this->myvector.size()) {
+		if(this->myvector[i] < this->myvector[i - 2]) {
+			bufa = this->myvector[i];
+			bufb = this->myvector[i - 1];
+			this->myvector[i] = this->myvector[i - 2];
+			this->myvector[i - 1] = this->myvector[i - 3];
+			this->myvector[i - 2] = bufa;
+			this->myvector[i - 3] = bufb;
+			i -= 2;
+			if(i < 3)
+				i = 3;
+		}
+		else
+			i += 2;
+	}
+	return 0;
+}
+
+//This function uses a closed-form equation of the Jacobsthal numbers
 //those numbers are used in this algorithm to determine the most efficient order
 //for the last merging step.
 int PmergeMe::jacob(int n) {
@@ -93,8 +128,9 @@ int PmergeMe::jacob(int n) {
 
 void	PmergeMe::dispVec(void) {
 
-	for(size_t i = 0; i < this->myvector.size(); i++)
+	for(size_t i = 0; i < this->myvector.size(); i++) {
 		std::cout << ' ' << this->myvector[i];
+	}
 	std::cout << std::endl;
 	return ;
 }

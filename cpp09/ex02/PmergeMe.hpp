@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:36 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/23 10:23:37 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/23 13:11:02 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ private:
 
 	int		parsing(std::string str);
 	int		doubleUp(void);
+	int		bigSort(void);
 	int		jacob(int n);
 
 };
