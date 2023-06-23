@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/22 23:50:01 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:44:33 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ PmergeMe::~PmergeMe(void) {
 
 int	PmergeMe::exec(std::string str) {
 
-	this->parsing(str);
+	if(this->parsing(str))
+		return 1;
+	this->dispVec();
+	this->doubleUp();
+	this->dispVec();
 	return 0;
 }
 
@@ -57,10 +61,25 @@ int	PmergeMe::parsing(std::string str) {
 			std::cout << "Error in parsing : invalid format." << std::endl;
 			return 1;
 		}
-		std::cout << "[" << buf << "]" << std::endl;
+		this->myvector.push_back(atoi(buf.c_str()));
 	}
 	if (i == 0)
 		std::cout << "Error in parsing : invalid format." << std::endl;
+	return 0;
+}
+
+int	PmergeMe::doubleUp(void) {
+
+	int buf;
+	if (this->myvector.size() <= 1)
+		return 0;
+	for(size_t i = 1; i < this->myvector.size(); i += 2) {
+		if(this->myvector[i - 1] > this->myvector[i]) {
+			buf = this->myvector[i];
+			this->myvector[i] = this->myvector[i - 1];
+			this->myvector[i - 1] = buf;
+		}
+	}
 	return 0;
 }
 
@@ -70,4 +89,12 @@ int	PmergeMe::parsing(std::string str) {
 int PmergeMe::jacob(int n) {
 
 	return ((pow(2, n) - pow((-1), n)) / 3);
+}
+
+void	PmergeMe::dispVec(void) {
+
+	for(size_t i = 0; i < this->myvector.size(); i++)
+		std::cout << ' ' << this->myvector[i];
+	std::cout << std::endl;
+	return ;
 }

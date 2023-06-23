@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:36 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/22 23:01:05 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/23 10:23:37 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,16 @@ public:
 	PmergeMe & operator=(PmergeMe const & rhs);
 	~PmergeMe(void);
 
-	int	exec(std::string str);
-	int	jacob(int n);
+	int		exec(std::string str);
+	void	dispVec(void);
 
 private:
 
 	std::vector<int> myvector;
 
-	int	parsing(std::string str);
+	int		parsing(std::string str);
+	int		doubleUp(void);
+	int		jacob(int n);
 
 };
 
