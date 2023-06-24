@@ -6,37 +6,22 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/24 12:26:44 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/24 18:25:05 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PmergeMe.hpp"
 
-PmergeMe::PmergeMe(void) {
+//Binary search on sorted numbers uses the same amount of comparisons when there is (2^n) elements
+//in the list as when there is ((2^(n+1)) - 1) elements.
+//knowing this, we will sort each numbers with the number next to it creating pairs of sorted numbers.
+//ex : [5 1 4 3] -> [1 5 3 4]
+//We then sort all those pairs looking only their biggest number.
+//ex : [1 5 3 4] -> [3 4 1 5]
+//We can finally merge the unsorted numbers (the smallest number of each pair). Knowing that those
+//numbers cannnot be bigger than the other number in the pair, we can use binary search on a reduced list.
 
-	//std::cout << "+ PmergeMe default constructor called" << std::endl;
-	return ;
-}
-
-PmergeMe::PmergeMe(PmergeMe const & src) {
-
-	*this = src;
-	return ;
-}
-
-PmergeMe &	PmergeMe::operator=(PmergeMe const & rhs) {
-
-	(void)rhs;
-	//this->_data = rhs._data;
-	return (*this);
-}
-
-PmergeMe::~PmergeMe(void) {
-
-	//std::cout << "- PmergeMe default destructor called" << std::endl;
-	return ;
-}
-
+//main function :
 int	PmergeMe::exec(std::string str) {
 
 	if(this->parsing(str))
@@ -46,10 +31,12 @@ int	PmergeMe::exec(std::string str) {
 	this->dispVec();
 	this->bigSort();
 	this->dispVec();
+	std::cout << "b1 a1 b2 a2 b3 a3 b4 a4 b5 a5" << std::endl;
 
 	return 0;
 }
 
+//Parsing the std::string in a container :
 int	PmergeMe::parsing(std::string str) {
 
 	std::istringstream	ss(str);
@@ -118,7 +105,7 @@ int	PmergeMe::bigSort(void) {
 	return 0;
 }
 
-//This function uses a closed-form equation of the Jacobsthal numbers
+//This function uses a closed-form equation to find the Jacobsthal numbers
 //those numbers are used in this algorithm to determine the most efficient order
 //for the last merging step.
 int PmergeMe::jacob(int n) {
@@ -126,11 +113,47 @@ int PmergeMe::jacob(int n) {
 	return ((pow(2, n) - pow((-1), n)) / 3);
 }
 
+//Now that we have half of the numbers sorted and each of them being paired with a 
+//smaller one (but not sorted), we need to merge those small numbers and sort everything up.
+
+int	PmergeMe::mergeIt(void) {
+
+
+	std::cout << "mergeIt()" << std::endl;
+	return 0;
+}
+
+//little function to display the content of the vector.
 void	PmergeMe::dispVec(void) {
 
 	for(size_t i = 0; i < this->myvector.size(); i++) {
 		std::cout << ' ' << this->myvector[i];
 	}
 	std::cout << std::endl;
+	return ;
+}
+
+PmergeMe::PmergeMe(void) {
+
+	//std::cout << "+ PmergeMe default constructor called" << std::endl;
+	return ;
+}
+
+PmergeMe::PmergeMe(PmergeMe const & src) {
+
+	*this = src;
+	return ;
+}
+
+PmergeMe &	PmergeMe::operator=(PmergeMe const & rhs) {
+
+	(void)rhs;
+	//this->_data = rhs._data;
+	return (*this);
+}
+
+PmergeMe::~PmergeMe(void) {
+
+	//std::cout << "- PmergeMe default destructor called" << std::endl;
 	return ;
 }
