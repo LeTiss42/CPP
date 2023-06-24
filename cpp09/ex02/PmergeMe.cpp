@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/23 15:43:50 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/24 12:26:44 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ int	PmergeMe::doubleUp(void) {
 	return 0;
 }
 
-//This function sorts each pair looking at the biggest number of each.
+//This function sorts each pair looking at the biggest number of each while keeping the pairs.
 //The biggest numbers will be sorted while the smallest ones of each pair will not.
-//ex : [1 5 3 4] -> [1 4 3 5]
+//ex : [1 5 3 4] -> [3 4 1 5]
 int	PmergeMe::bigSort(void) {
 
 	size_t i = 3;
