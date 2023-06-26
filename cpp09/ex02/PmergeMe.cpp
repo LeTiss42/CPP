@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/26 15:31:35 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/26 23:18:37 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,15 +111,17 @@ int	PmergeMe::bigSort(void) {
 //need to be sorted.
 int	PmergeMe::mergeIt(void) {
 
-	std::vector<int>	big;
-	std::vector<int>	small;
-	/*
-	int	a	= 4;
-	int	z	= 2;
-	int	x	= 2;
-	int	i	= 2;
-	int	pos	= 2;
-	*/
+	int							i	= 1;
+	int							pivo= 1;
+	int							half= 0;
+	int							x	= 2;
+	int							pw	= 2;
+	int							tot = 0;
+	int							sml	= 0;
+	int							bg	= 2;
+	std::vector<int>			big;
+	std::vector<int>			small;
+	std::vector<int>::iterator	it = small.begin();
 	
 	for(std::vector<int>::iterator it = this->myvector.begin(); it != this->myvector.end(); it++) {
 		small.push_back(*it);
@@ -127,6 +129,8 @@ int	PmergeMe::mergeIt(void) {
 		if(it != this->myvector.end())
 			big.push_back(*it);
 	}
+	big.insert(big.begin(), small.front());
+	small.erase(small.begin());
 	std::cout << "big = ";
 	for(std::vector<int>::iterator it = big.begin(); it != big.end(); it++)
 		std::cout << *it;
@@ -134,21 +138,22 @@ int	PmergeMe::mergeIt(void) {
 	for(std::vector<int>::iterator it = small.begin(); it != small.end(); it++)
 		std::cout << *it;
 	std::cout << std::endl;
-/*
-	//merge 4 -> 2
-	z = a;//4
-	x = pow(2, i++) - x;//2
-	a = a + x;//6
-	//merge 6 -> 4
-	z = a;//6
-	x = pow(2, i++) - x;//6
-	a = a + x;//12
-	//merge 12 -> 6
-	z = a;//12
-	x = pow(2, i++) - x;//10;
-	a = a + x;//22;
-	//merge 22 -> 12;
-*/
+
+	while(tot < small.size()) {
+		while((i < x) && (it != small.end())) {
+			it++; //[0]->[1]
+			i++;  //[1]->[2]
+			sml++;//[0]->[1]
+			bg++; //[2]->[3]
+		}
+		
+		pivo = pivo + x;
+	}
+
+
+	x = pow(2, pw++) - x;//2
+	x = pow(2, pw++) - x;//6
+	x = pow(2, pw++) - x;//10;
 	return 0;
 }
 
