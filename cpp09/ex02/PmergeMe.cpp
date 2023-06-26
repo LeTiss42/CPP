@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/24 18:25:05 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/26 15:31:35 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int	PmergeMe::exec(std::string str) {
 	this->dispVec();
 	this->bigSort();
 	this->dispVec();
-	std::cout << "b1 a1 b2 a2 b3 a3 b4 a4 b5 a5" << std::endl;
-
+	this->mergeIt();
 	return 0;
 }
 
@@ -105,21 +104,51 @@ int	PmergeMe::bigSort(void) {
 	return 0;
 }
 
-//This function uses a closed-form equation to find the Jacobsthal numbers
-//those numbers are used in this algorithm to determine the most efficient order
-//for the last merging step.
-int PmergeMe::jacob(int n) {
-
-	return ((pow(2, n) - pow((-1), n)) / 3);
-}
 
 //Now that we have half of the numbers sorted and each of them being paired with a 
 //smaller one (but not sorted), we need to merge those small numbers and sort everything up.
-
+//I use here a buffer vector to know wich elements have been sorted and the others that still
+//need to be sorted.
 int	PmergeMe::mergeIt(void) {
 
-
-	std::cout << "mergeIt()" << std::endl;
+	std::vector<int>	big;
+	std::vector<int>	small;
+	/*
+	int	a	= 4;
+	int	z	= 2;
+	int	x	= 2;
+	int	i	= 2;
+	int	pos	= 2;
+	*/
+	
+	for(std::vector<int>::iterator it = this->myvector.begin(); it != this->myvector.end(); it++) {
+		small.push_back(*it);
+		it++;
+		if(it != this->myvector.end())
+			big.push_back(*it);
+	}
+	std::cout << "big = ";
+	for(std::vector<int>::iterator it = big.begin(); it != big.end(); it++)
+		std::cout << *it;
+	std::cout << " small = ";
+	for(std::vector<int>::iterator it = small.begin(); it != small.end(); it++)
+		std::cout << *it;
+	std::cout << std::endl;
+/*
+	//merge 4 -> 2
+	z = a;//4
+	x = pow(2, i++) - x;//2
+	a = a + x;//6
+	//merge 6 -> 4
+	z = a;//6
+	x = pow(2, i++) - x;//6
+	a = a + x;//12
+	//merge 12 -> 6
+	z = a;//12
+	x = pow(2, i++) - x;//10;
+	a = a + x;//22;
+	//merge 22 -> 12;
+*/
 	return 0;
 }
 
@@ -131,6 +160,15 @@ void	PmergeMe::dispVec(void) {
 	}
 	std::cout << std::endl;
 	return ;
+}
+
+//***** not using it anymore *****
+//This function uses a closed-form equation to find the Jacobsthal numbers
+//those numbers are used in this algorithm to determine the most efficient order
+//for the last merging step.
+int PmergeMe::jacob(int n) {
+
+	return ((pow(2, n) - pow((-1), n)) / 3);
 }
 
 PmergeMe::PmergeMe(void) {
