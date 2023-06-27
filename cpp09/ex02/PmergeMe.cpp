@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/26 23:18:37 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/27 18:28:43 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,12 @@ int	PmergeMe::exec(std::string str) {
 	this->dispVec();
 	this->bigSort();
 	this->dispVec();
-	this->mergeIt();
+	//this->mergeIt();
 	return 0;
 }
 
-//Parsing the std::string in a container :
+//Parsing the std::string in a container.
+//No double allowed.
 int	PmergeMe::parsing(std::string str) {
 
 	std::istringstream	ss(str);
@@ -49,6 +50,12 @@ int	PmergeMe::parsing(std::string str) {
 			|| (buf.size() == 0) ) {
 			std::cout << "Error in parsing : invalid format." << std::endl;
 			return 1;
+		}
+		for(std::vector<int>::iterator it = this->myvector.begin(); it != this->myvector.end(); it++) {
+			if (*it == atoi(buf.c_str())) {
+			 	std::cout << "Error in parsing : doubles are not allowed [" << *it << "]" << std::endl;
+				return 1;
+			}
 		}
 		this->myvector.push_back(atoi(buf.c_str()));
 	}
@@ -111,17 +118,10 @@ int	PmergeMe::bigSort(void) {
 //need to be sorted.
 int	PmergeMe::mergeIt(void) {
 
-	int							i	= 1;
-	int							pivo= 1;
-	int							half= 0;
 	int							x	= 2;
 	int							pw	= 2;
-	int							tot = 0;
-	int							sml	= 0;
-	int							bg	= 2;
 	std::vector<int>			big;
 	std::vector<int>			small;
-	std::vector<int>::iterator	it = small.begin();
 	
 	for(std::vector<int>::iterator it = this->myvector.begin(); it != this->myvector.end(); it++) {
 		small.push_back(*it);
@@ -139,18 +139,6 @@ int	PmergeMe::mergeIt(void) {
 		std::cout << *it;
 	std::cout << std::endl;
 
-	while(tot < small.size()) {
-		while((i < x) && (it != small.end())) {
-			it++; //[0]->[1]
-			i++;  //[1]->[2]
-			sml++;//[0]->[1]
-			bg++; //[2]->[3]
-		}
-		
-		pivo = pivo + x;
-	}
-
-
 	x = pow(2, pw++) - x;//2
 	x = pow(2, pw++) - x;//6
 	x = pow(2, pw++) - x;//10;
@@ -162,6 +150,10 @@ void	PmergeMe::dispVec(void) {
 
 	for(size_t i = 0; i < this->myvector.size(); i++) {
 		std::cout << ' ' << this->myvector[i];
+		if(this->myvector[i] < 10)
+			std::cout << "0";
+		if((i % 2) != 0)
+			std::cout << " ";
 	}
 	std::cout << std::endl;
 	return ;
