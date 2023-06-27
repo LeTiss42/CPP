@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:36 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/26 13:07:28 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/27 23:20:00 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ private:
 	int		doubleUp(void);
 	int		bigSort(void);
 	int		mergeIt(void);
+	int		littleMerge(void);
+	int		insertOne(int pos);
 	int		jacob(int n);
 
 };

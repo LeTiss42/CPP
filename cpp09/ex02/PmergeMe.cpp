@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/27 18:28:43 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/27 23:25:39 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,11 @@ int	PmergeMe::exec(std::string str) {
 	this->dispVec();
 	this->bigSort();
 	this->dispVec();
-	//this->mergeIt();
+	if( (this->myvector.size() == 3) || (this->myvector.size() == 4) )
+		this->littleMerge();
+	else if (this->myvector.size() > 4)
+		this->mergeIt();
+	this->dispVec();
 	return 0;
 }
 
@@ -111,6 +115,24 @@ int	PmergeMe::bigSort(void) {
 	return 0;
 }
 
+//function to merge sequence of size 3 or 4.
+int	PmergeMe::littleMerge(void) {
+	
+	int	buf;
+
+	std::cout << "little merge" << std::endl;
+	buf = this->myvector[2];
+	if(buf > this->myvector[0]) {
+		if(buf > this->myvector[1])
+			return 0;
+		this->myvector.erase(this->myvector.begin() + 2);
+		this->myvector.insert(this->myvector.begin() + 1, buf);
+		return 0;
+	}
+	this->myvector.erase(this->myvector.begin() + 2);
+	this->myvector.insert(this->myvector.begin(), buf);
+	return 0;
+}
 
 //Now that we have half of the numbers sorted and each of them being paired with a 
 //smaller one (but not sorted), we need to merge those small numbers and sort everything up.
@@ -120,28 +142,42 @@ int	PmergeMe::mergeIt(void) {
 
 	int							x	= 2;
 	int							pw	= 2;
+	int							a	= 0;
+	int							z	= 1;
+	size_t						tot	= 0;
 	std::vector<int>			big;
 	std::vector<int>			small;
 	
-	for(std::vector<int>::iterator it = this->myvector.begin(); it != this->myvector.end(); it++) {
+	for(std::vector<int>::iterator it = this->myvector.begin(); it != this->myvector.end();) {
 		small.push_back(*it);
 		it++;
-		if(it != this->myvector.end())
+		if(it != this->myvector.end()) {
 			big.push_back(*it);
+			it++;
+		}
 	}
 	big.insert(big.begin(), small.front());
 	small.erase(small.begin());
 	std::cout << "big = ";
 	for(std::vector<int>::iterator it = big.begin(); it != big.end(); it++)
-		std::cout << *it;
+		std::cout << *it << " ";
 	std::cout << " small = ";
 	for(std::vector<int>::iterator it = small.begin(); it != small.end(); it++)
-		std::cout << *it;
+		std::cout << *it << " ";
 	std::cout << std::endl;
 
-	x = pow(2, pw++) - x;//2
-	x = pow(2, pw++) - x;//6
-	x = pow(2, pw++) - x;//10;
+	while(tot < small.size()) {
+		for(int k = z; k >= a; k--) {
+			this->insertOne(z);
+			tot++;
+		}
+		a = z;
+		x = pow(2, pw++) - x;
+		if ( (z + x) < (small.size() - 1))
+			z += x;
+		else
+			z = (small.size() - 1);
+	}
 	return 0;
 }
 
@@ -149,9 +185,10 @@ int	PmergeMe::mergeIt(void) {
 void	PmergeMe::dispVec(void) {
 
 	for(size_t i = 0; i < this->myvector.size(); i++) {
-		std::cout << ' ' << this->myvector[i];
+		std::cout << ' ';
 		if(this->myvector[i] < 10)
 			std::cout << "0";
+		std::cout << this->myvector[i];
 		if((i % 2) != 0)
 			std::cout << " ";
 	}
