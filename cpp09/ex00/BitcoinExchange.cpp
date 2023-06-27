@@ -130,6 +130,13 @@ int	BitChange::dispThune(std::string filename) {
 	return 0;
 }
 
+//A better way of doing this is to use std::tm class :
+//std::stringstream	ss(string);
+//std::tm			date = {};
+//
+//ss >> std::get_time(&date, "%Y-%m-%d");
+//if(ss.fail)
+//	std::cout << error << std::endl;
 int	BitChange::checkDate(std::string str) {
 	
 	std::string res;
