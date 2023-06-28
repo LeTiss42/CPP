@@ -6,24 +6,23 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:05:44 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/23 13:10:14 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/28 18:09:22 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <ctime>
 #include "PmergeMe.hpp"
 
 int main(int argc, char **argv) {
 
-	if (argc != 2) {
-		std::cout << "This program needs exactly one string as argument" << std::endl;
-		return 0;
-	}
-	std::cout << "----- PmergeMe -----" << std::endl;
+	std::clock_t	start;
 
+	start = std::clock();
 	PmergeMe a;
-	a.exec(argv[1]);
+	a.execVector(argc, argv);
+	start = std::clock() - start;
+	std::cout << "Temps de process de vector is " << start * 10000 << std::endl; 
 
-	std::cout << "----- THE END! -----" << std::endl;
 	return 0;
 }

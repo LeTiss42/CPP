@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:36 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/27 23:20:00 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/28 17:58:07 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <cmath>
 # include <vector>
 # include <sstream>
+# include <algorithm>
 
 class PmergeMe {
 
@@ -27,19 +28,20 @@ public:
 	PmergeMe & operator=(PmergeMe const & rhs);
 	~PmergeMe(void);
 
-	int		exec(std::string str);
+	int		execVector(int argc, char **argv);
 	void	dispVec(void);
+	void	dispVecSimple(void);
 
 private:
 
 	std::vector<int> myvector;
 
-	int		parsing(std::string str);
+	int		parsing(int argc, char **argv);
 	int		doubleUp(void);
 	int		bigSort(void);
 	int		mergeIt(void);
 	int		littleMerge(void);
-	int		insertOne(int pos);
+	int		insertOne(size_t pos, std::vector<int> &small, std::vector<int> &big);
 	int		jacob(int n);
 
 };

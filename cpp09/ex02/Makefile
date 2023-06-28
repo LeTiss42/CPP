@@ -1,4 +1,4 @@
-NAME = PmergMe
+NAME = PmergeMe
 
 GXX = c++
 CFLAGS = -std=c++98 -Wall -Werror -Wextra -pedantic #-fsanitize=address

@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/27 23:25:39 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/28 18:05:01 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,32 @@
 //numbers cannnot be bigger than the other number in the pair, we can use binary search on a reduced list.
 
 //main function :
-int	PmergeMe::exec(std::string str) {
+int	PmergeMe::execVector(int argc, char **argv) {
 
-	if(this->parsing(str))
+	if(this->parsing(argc, argv))
 		return 1;
-	this->dispVec();
+	std::cout << "Before: ";
+	this->dispVecSimple();
 	this->doubleUp();
-	this->dispVec();
 	this->bigSort();
-	this->dispVec();
 	if( (this->myvector.size() == 3) || (this->myvector.size() == 4) )
 		this->littleMerge();
 	else if (this->myvector.size() > 4)
 		this->mergeIt();
-	this->dispVec();
+	std::cout << "after:  ";
+	this->dispVecSimple();
 	return 0;
 }
 
 //Parsing the std::string in a container.
 //No double allowed.
-int	PmergeMe::parsing(std::string str) {
+int	PmergeMe::parsing(int argc, char **argv) {
 
-	std::istringstream	ss(str);
 	std::string			buf;
 	int					i = 0;
 
-	while (ss >> buf) {
+	for(int j = 1; j < argc; j++) {
+		buf = argv[j];
 		i = 1;
 		if ( (buf.find_first_not_of("0123456789") != std::string::npos)
 			|| ( (buf.size() >= 10) && (buf > "2147483647") )
@@ -120,7 +120,6 @@ int	PmergeMe::littleMerge(void) {
 	
 	int	buf;
 
-	std::cout << "little merge" << std::endl;
 	buf = this->myvector[2];
 	if(buf > this->myvector[0]) {
 		if(buf > this->myvector[1])
@@ -140,10 +139,10 @@ int	PmergeMe::littleMerge(void) {
 //need to be sorted.
 int	PmergeMe::mergeIt(void) {
 
-	int							x	= 2;
-	int							pw	= 2;
-	int							a	= 0;
-	int							z	= 1;
+	size_t						x	= 2;
+	size_t						pw	= 2;
+	size_t						a	= 0;
+	size_t						z	= 1;
 	size_t						tot	= 0;
 	std::vector<int>			big;
 	std::vector<int>			small;
@@ -158,26 +157,42 @@ int	PmergeMe::mergeIt(void) {
 	}
 	big.insert(big.begin(), small.front());
 	small.erase(small.begin());
-	std::cout << "big = ";
-	for(std::vector<int>::iterator it = big.begin(); it != big.end(); it++)
-		std::cout << *it << " ";
-	std::cout << " small = ";
-	for(std::vector<int>::iterator it = small.begin(); it != small.end(); it++)
-		std::cout << *it << " ";
-	std::cout << std::endl;
-
 	while(tot < small.size()) {
-		for(int k = z; k >= a; k--) {
-			this->insertOne(z);
+		for(int k = (int)z; k >= (int)a; k--) {
+			this->insertOne(k, small, big);
 			tot++;
 		}
-		a = z;
+		a = z + 1;
 		x = pow(2, pw++) - x;
 		if ( (z + x) < (small.size() - 1))
 			z += x;
 		else
 			z = (small.size() - 1);
 	}
+	if(big.size() != this->myvector.size()) {
+		std::cout << "An error occured..." << std::endl;
+		return 1;
+	}
+	this->myvector.swap(big);
+	return 0;
+}
+
+int	PmergeMe::insertOne(size_t	x, std::vector<int> &small, std::vector<int> &big) {
+	
+	int	top = *(big.end() - 1);
+
+	(void)big;
+	for(std::vector<int>::iterator it = this->myvector.begin(); it != this->myvector.end(); it++) {
+		if((*it == small[x]) && (it != this->myvector.end() - 1)) {
+			top = *(++it);
+			break;
+		}
+		else if((*it == small[x]) && (it == this->myvector.end() - 1)){
+			top = *(--it);
+			break;
+		}
+	}
+	big.insert(std::lower_bound(big.begin(), find(big.begin(), big.end(), small[x]), small[x]), small[x]);
 	return 0;
 }
 
@@ -191,6 +206,16 @@ void	PmergeMe::dispVec(void) {
 		std::cout << this->myvector[i];
 		if((i % 2) != 0)
 			std::cout << " ";
+	}
+	std::cout << std::endl;
+	return ;
+}
+
+void	PmergeMe::dispVecSimple(void) {
+
+	for(size_t i = 0; i < this->myvector.size(); i++) {
+		std::cout << this->myvector[i];
+		std::cout << ' ';
 	}
 	std::cout << std::endl;
 	return ;
