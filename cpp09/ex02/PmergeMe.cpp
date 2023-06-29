@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/28 18:05:01 by mravera          ###   ########.fr       */
+/*   Updated: 2023/06/29 15:19:44 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,37 @@
 //We then sort all those pairs looking only their biggest number.
 //ex : [1 5 3 4] -> [3 4 1 5]
 //We can finally merge the unsorted numbers (the smallest number of each pair). Knowing that those
-//numbers cannnot be bigger than the other number in the pair, we can use binary search on a reduced list.
+//numbers cannnot be bigger than the other number in the pair, we can use binary search on a reduced portion of the list.
+//-> it should be possible to use Template to have a single function working for each container.
 
 //main function :
-int	PmergeMe::execVector(int argc, char **argv) {
-
+int	PmergeMe::theMain(int argc, char **argv) {
+	
 	if(this->parsing(argc, argv))
 		return 1;
-	std::cout << "Before: ";
-	this->dispVecSimple();
+	return 0;
+}
+
+//main function for the vector container :
+int	PmergeMe::execVector(void) {
+
 	this->doubleUp();
 	this->bigSort();
 	if( (this->myvector.size() == 3) || (this->myvector.size() == 4) )
 		this->littleMerge();
 	else if (this->myvector.size() > 4)
 		this->mergeIt();
-	std::cout << "after:  ";
-	this->dispVecSimple();
+	return 0;
+}
+//main function for the list container :
+int	PmergeMe::execVector(void) {
+
+	this->doubleUplst();
+	this->bigSortlst();
+	if( (this->mylist.size() == 3) || (this->mylist.size() == 4) )
+		this->littleMergelst();
+	else if (this->mylist.size() > 4)
+		this->mergeItlst();
 	return 0;
 }
 
@@ -62,6 +76,7 @@ int	PmergeMe::parsing(int argc, char **argv) {
 			}
 		}
 		this->myvector.push_back(atoi(buf.c_str()));
+		this->mylist.push_back(atoi(buf.c_str()));
 	}
 	if (i == 0)
 		std::cout << "Error in parsing : invalid format." << std::endl;
@@ -86,6 +101,23 @@ int	PmergeMe::doubleUp(void) {
 	return 0;
 }
 
+//This function just sort the 2 numbers in each pair of the list container.
+//ex : [5 1 4 3] -> [1 5 3 4]
+int	PmergeMe::doubleUplst(void) {
+
+	int buf;
+
+	if (this->mylist.size() <= 1)
+		return 0;
+	for(size_t i = 1; i < this->mylist.size(); i += 2) {
+		if(getlst(this->mylist, (i - 1)) > getlst(this->mylist, i)) {
+			buf = getlst(this->mylist, i);
+			*setlst(this->mylist, i) = getlst(this->mylist, (i - 1));
+			*setlst(this->mylist, (i - 1)) = buf;
+		}
+	}
+	return 0;
+}
 //This function sorts each pair looking at the biggest number of each while keeping the pairs.
 //The biggest numbers will be sorted while the smallest ones of each pair will not.
 //ex : [1 5 3 4] -> [3 4 1 5]
@@ -219,6 +251,30 @@ void	PmergeMe::dispVecSimple(void) {
 	}
 	std::cout << std::endl;
 	return ;
+}
+
+int	getlst(std::list<int> &mylist, int pos) {
+	
+	int i = 0;
+
+	std::list<int>::iterator it = mylist.begin();
+	while(i < pos) {
+		it++;
+		i++;
+	}
+	return (*it);
+}
+
+std::list<int>::iterator	setlst(std::list<int> &mylist, int pos) {
+
+	int i = 0;
+
+	std::list<int>::iterator it = mylist.begin();
+	while(i < pos) {
+		it++;
+		i++;
+	}
+	return it;
 }
 
 //***** not using it anymore *****
