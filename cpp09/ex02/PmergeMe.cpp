@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/29 15:19:44 by mravera          ###   ########.fr       */
+/*   Updated: 2023/07/01 18:22:37 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,37 +21,6 @@
 //We can finally merge the unsorted numbers (the smallest number of each pair). Knowing that those
 //numbers cannnot be bigger than the other number in the pair, we can use binary search on a reduced portion of the list.
 //-> it should be possible to use Template to have a single function working for each container.
-
-//main function :
-int	PmergeMe::theMain(int argc, char **argv) {
-	
-	if(this->parsing(argc, argv))
-		return 1;
-	return 0;
-}
-
-//main function for the vector container :
-int	PmergeMe::execVector(void) {
-
-	this->doubleUp();
-	this->bigSort();
-	if( (this->myvector.size() == 3) || (this->myvector.size() == 4) )
-		this->littleMerge();
-	else if (this->myvector.size() > 4)
-		this->mergeIt();
-	return 0;
-}
-//main function for the list container :
-int	PmergeMe::execVector(void) {
-
-	this->doubleUplst();
-	this->bigSortlst();
-	if( (this->mylist.size() == 3) || (this->mylist.size() == 4) )
-		this->littleMergelst();
-	else if (this->mylist.size() > 4)
-		this->mergeItlst();
-	return 0;
-}
 
 //Parsing the std::string in a container.
 //No double allowed.
@@ -78,8 +47,34 @@ int	PmergeMe::parsing(int argc, char **argv) {
 		this->myvector.push_back(atoi(buf.c_str()));
 		this->mylist.push_back(atoi(buf.c_str()));
 	}
-	if (i == 0)
+	if (i == 0) {
 		std::cout << "Error in parsing : invalid format." << std::endl;
+		return 1;
+	}
+	return 0;
+}
+
+//main function for the vector container :
+int	PmergeMe::execVector(void) {
+
+	this->doubleUp();
+	this->bigSort();
+	if( (this->myvector.size() == 3) || (this->myvector.size() == 4) )
+		this->littleMerge();
+	else if (this->myvector.size() > 4)
+		this->mergeIt();
+	return 0;
+}
+
+//main function for the list container :
+int	PmergeMe::execList(void) {
+
+	this->doubleUplst();
+	this->bigSortlst();
+	if( (this->mylist.size() == 3) || (this->mylist.size() == 4) )
+		this->littleMergelst();
+	else if (this->mylist.size() > 4)
+		this->mergeItlst();
 	return 0;
 }
 
@@ -101,8 +96,7 @@ int	PmergeMe::doubleUp(void) {
 	return 0;
 }
 
-//This function just sort the 2 numbers in each pair of the list container.
-//ex : [5 1 4 3] -> [1 5 3 4]
+//Same function for a list container
 int	PmergeMe::doubleUplst(void) {
 
 	int buf;
@@ -110,14 +104,15 @@ int	PmergeMe::doubleUplst(void) {
 	if (this->mylist.size() <= 1)
 		return 0;
 	for(size_t i = 1; i < this->mylist.size(); i += 2) {
-		if(getlst(this->mylist, (i - 1)) > getlst(this->mylist, i)) {
-			buf = getlst(this->mylist, i);
-			*setlst(this->mylist, i) = getlst(this->mylist, (i - 1));
+		if(*setlst(this->mylist, (i - 1)) > *setlst(this->mylist, i)) {
+			buf = *setlst(this->mylist, i);
+			*setlst(this->mylist, i) = *setlst(this->mylist, (i - 1));
 			*setlst(this->mylist, (i - 1)) = buf;
 		}
 	}
 	return 0;
 }
+
 //This function sorts each pair looking at the biggest number of each while keeping the pairs.
 //The biggest numbers will be sorted while the smallest ones of each pair will not.
 //ex : [1 5 3 4] -> [3 4 1 5]
@@ -147,6 +142,33 @@ int	PmergeMe::bigSort(void) {
 	return 0;
 }
 
+//Same function for a list container
+int	PmergeMe::bigSortlst(void) {
+
+	size_t i = 3;
+	int bufa;
+	int	bufb;
+
+	if(this->mylist.size() < 4)
+		return 1;
+	while(i < this->mylist.size()) {
+		if(*this->setlst(this->mylist, i) < *this->setlst(this->mylist, i - 2)) {
+			bufa = *this->setlst(this->mylist, i);
+			bufb = *this->setlst(this->mylist, i - 1);
+			*this->setlst(this->mylist, i) = *this->setlst(this->mylist, (i - 2));
+			*this->setlst(this->mylist, i - 1) = *this->setlst(this->mylist, (i - 3));
+			*this->setlst(this->mylist, i - 2) = bufa;
+			*this->setlst(this->mylist, i - 3) = bufb;
+			i -= 2;
+			if(i < 3)
+				i = 3;
+		}
+		else
+			i += 2;
+	}
+	return 0;
+}
+
 //function to merge sequence of size 3 or 4.
 int	PmergeMe::littleMerge(void) {
 	
@@ -162,6 +184,24 @@ int	PmergeMe::littleMerge(void) {
 	}
 	this->myvector.erase(this->myvector.begin() + 2);
 	this->myvector.insert(this->myvector.begin(), buf);
+	return 0;
+}
+
+//Same function for a list container.
+int	PmergeMe::littleMergelst(void) {
+	
+	int	buf;
+
+	buf = *this->setlst(this->mylist, 2);
+	if(buf > *this->setlst(this->mylist, 0)) {
+		if(buf > *this->setlst(this->mylist, 1))
+			return 0;
+		*this->setlst(this->mylist, 2) = *this->setlst(this->mylist, 1);
+		*this->setlst(this->mylist, 1) = buf;
+		return 0;
+	}
+	*this->setlst(this->mylist, 2) = *this->setlst(this->mylist, 0);
+	*this->setlst(this->mylist, 0) = buf;
 	return 0;
 }
 
@@ -228,6 +268,66 @@ int	PmergeMe::insertOne(size_t	x, std::vector<int> &small, std::vector<int> &big
 	return 0;
 }
 
+//Same function for a list container
+int	PmergeMe::mergeItlst(void) {
+
+	size_t						x	= 2;
+	size_t						pw	= 2;
+	size_t						a	= 0;
+	size_t						z	= 1;
+	size_t						tot	= 0;
+	std::list<int>			big;
+	std::list<int>			small;
+	
+	for(std::list<int>::iterator it = this->mylist.begin(); it != this->mylist.end();) {
+		small.push_back(*it);
+		it++;
+		if(it != this->mylist.end()) {
+			big.push_back(*it);
+			it++;
+		}
+	}
+	big.insert(big.begin(), small.front());
+	small.erase(small.begin());
+	while(tot < small.size()) {
+		for(int k = (int)z; k >= (int)a; k--) {
+			this->insertOnelst(k, small, big);
+			tot++;
+		}
+		a = z + 1;
+		x = pow(2, pw++) - x;
+		if ( (z + x) < (small.size() - 1))
+			z += x;
+		else
+			z = (small.size() - 1);
+	}
+	if(big.size() != this->myvector.size()) {
+		std::cout << "An error occured..." << std::endl;
+		return 1;
+	}
+	this->mylist.swap(big);
+	return 0;
+}
+
+int	PmergeMe::insertOnelst(size_t	x, std::list<int> &small, std::list<int> &big) {
+	
+	int	top = big.back();
+
+	(void)big;
+	for(std::list<int>::iterator it = this->mylist.begin(); it != this->mylist.end(); it++) {
+		if((*it == *this->setlst(small, x)) && (it != (this->setlst(this->mylist, this->mylist.size() - 1)))) {
+			top = *(++it);
+			break;
+		}
+		else if((*it == *this->setlst(small, x)) && (it == this->setlst(this->mylist, this->mylist.size() - 1))){
+			top = *(--it);
+			break;
+		}
+	}
+	big.insert( std::lower_bound( big.begin(), find( big.begin(), big.end(), *this->setlst(small, x) ), *this->setlst(small, x)), *this->setlst(small, x));
+	return 0;
+}
+
 //little function to display the content of the vector.
 void	PmergeMe::dispVec(void) {
 
@@ -253,19 +353,18 @@ void	PmergeMe::dispVecSimple(void) {
 	return ;
 }
 
-int	getlst(std::list<int> &mylist, int pos) {
-	
-	int i = 0;
+void	PmergeMe::dispLstSimple(void) {
 
-	std::list<int>::iterator it = mylist.begin();
-	while(i < pos) {
-		it++;
-		i++;
+	for(size_t i = 0; i < this->mylist.size(); i++) {
+		std::cout << *this->setlst(this->mylist, i);
+		std::cout << ' ';
 	}
-	return (*it);
+	std::cout << std::endl;
+	return ;
 }
 
-std::list<int>::iterator	setlst(std::list<int> &mylist, int pos) {
+//little function to get an iterator at the position i in the list.
+std::list<int>::iterator	PmergeMe::setlst(std::list<int> &mylist, int pos) {
 
 	int i = 0;
 
