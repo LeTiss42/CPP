@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 15:33:08 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/04 17:31:24 by mravera          ###   ########.fr       */
+/*   Updated: 2023/07/08 16:55:29 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void ScalarConverter::convert(std::string s) {
 			break;
 		case 4:
 		 	ScalarConverter::dispDouble(s);
+			break;
 		case 5:
 			ScalarConverter::dispSpe(s);
 			break;
@@ -142,7 +143,7 @@ void ScalarConverter::dispFloat(std::string s) {
 		std::cout << "Original type conversion impossible." << std::endl;
 		return;
 	}
-	theFloat = std::strtof(s.c_str(), 0);
+	theFloat = std::strtod(s.c_str(), 0);
 	if (theFloat <= 255 && theFloat >= 0 && std::isprint(theFloat))
 		std::cout << "char: '" << static_cast<char>(theFloat) << "'" << std::endl;
 	else
@@ -205,7 +206,6 @@ void ScalarConverter::dispSpe(std::string s) {
 
 	while (s != spe[i] && i < 6)
 		i ++;
-	std::cout << i << std::endl;
 	std::cout << "char: impossible" << std::endl;
 	std::cout << "int: impossible" << std::endl;
 	if (i < 3) {
