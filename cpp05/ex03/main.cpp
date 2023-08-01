@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 11:55:18 by mravera           #+#    #+#             */
-/*   Updated: 2023/06/01 17:49:35 by mravera          ###   ########.fr       */
+/*   Updated: 2023/07/28 14:51:43 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,17 @@ int	main( void ) {
 	boss.executeForm(*rrf);
 	std::cout << *rrf << std::endl;
 	delete rrf;
+	rrf = someRandomIntern.makeForm("shrubbery creation", "Juan");
+	boss.executeForm(*rrf);
+	boss.signForm(*rrf);
+	boss.executeForm(*rrf);
+	delete rrf;
+	rrf = someRandomIntern.makeForm("presidential pardon", "Carlos");
+	boss.executeForm(*rrf);
+	boss.signForm(*rrf);
+	boss.executeForm(*rrf);
+	delete rrf;
 
-	std::cout << std::endl << "THE END!" << std::endl << std::endl;
+	std::cout << std::endl << "THE END!!" << std::endl << std::endl;
 	return 0;
 }
