@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/07/01 18:22:37 by mravera          ###   ########.fr       */
+/*   Updated: 2023/09/25 23:19:57 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 //numbers cannnot be bigger than the other number in the pair, we can use binary search on a reduced portion of the list.
 //-> it should be possible to use Template to have a single function working for each container.
 
-//Parsing the std::string in a container.
+//Parsing the std::string in a container (vector and list).
 //No double allowed.
 int	PmergeMe::parsing(int argc, char **argv) {
 
@@ -196,12 +196,16 @@ int	PmergeMe::littleMergelst(void) {
 	if(buf > *this->setlst(this->mylist, 0)) {
 		if(buf > *this->setlst(this->mylist, 1))
 			return 0;
-		*this->setlst(this->mylist, 2) = *this->setlst(this->mylist, 1);
-		*this->setlst(this->mylist, 1) = buf;
+		this->mylist.erase(this->setlst(this->mylist, 2));
+		this->mylist.insert(this->setlst(this->mylist, 1), buf);
+		//*this->setlst(this->mylist, 2) = *this->setlst(this->mylist, 1);
+		//*this->setlst(this->mylist, 1) = buf;
 		return 0;
 	}
-	*this->setlst(this->mylist, 2) = *this->setlst(this->mylist, 0);
-	*this->setlst(this->mylist, 0) = buf;
+	this->mylist.erase(this->setlst(this->mylist, 2));
+	this->mylist.insert(this->setlst(this->mylist, 0), buf);
+	//*this->setlst(this->mylist, 2) = *this->setlst(this->mylist, 0);
+	//*this->setlst(this->mylist, 0) = buf;
 	return 0;
 }
 
@@ -251,16 +255,16 @@ int	PmergeMe::mergeIt(void) {
 
 int	PmergeMe::insertOne(size_t	x, std::vector<int> &small, std::vector<int> &big) {
 	
-	int	top = *(big.end() - 1);
+	//int	top = *(big.end() - 1);
 
 	(void)big;
 	for(std::vector<int>::iterator it = this->myvector.begin(); it != this->myvector.end(); it++) {
 		if((*it == small[x]) && (it != this->myvector.end() - 1)) {
-			top = *(++it);
+			//top = *(++it);
 			break;
 		}
 		else if((*it == small[x]) && (it == this->myvector.end() - 1)){
-			top = *(--it);
+			//top = *(--it);
 			break;
 		}
 	}
@@ -311,16 +315,16 @@ int	PmergeMe::mergeItlst(void) {
 
 int	PmergeMe::insertOnelst(size_t	x, std::list<int> &small, std::list<int> &big) {
 	
-	int	top = big.back();
+	//int	top = big.back();
 
 	(void)big;
 	for(std::list<int>::iterator it = this->mylist.begin(); it != this->mylist.end(); it++) {
 		if((*it == *this->setlst(small, x)) && (it != (this->setlst(this->mylist, this->mylist.size() - 1)))) {
-			top = *(++it);
+			//top = *(++it);
 			break;
 		}
 		else if((*it == *this->setlst(small, x)) && (it == this->setlst(this->mylist, this->mylist.size() - 1))){
-			top = *(--it);
+			//top = *(--it);
 			break;
 		}
 	}
