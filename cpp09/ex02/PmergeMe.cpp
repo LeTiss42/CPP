@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/19 13:07:23 by mravera           #+#    #+#             */
-/*   Updated: 2023/09/25 23:19:57 by mravera          ###   ########.fr       */
+/*   Created: 2023/09/26 15:13:54 by mravera           #+#    #+#             */
+/*   Updated: 2023/09/26 16:30:39 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 
 //Parsing the std::string in a container (vector and list).
 //No double allowed.
-int	PmergeMe::parsing(int argc, char **argv) {
+
+int	PmergeMe::parsingvec(int argc, char **argv) {
 
 	std::string			buf;
 	int					i = 0;
@@ -45,6 +46,34 @@ int	PmergeMe::parsing(int argc, char **argv) {
 			}
 		}
 		this->myvector.push_back(atoi(buf.c_str()));
+	}
+	if (i == 0) {
+		std::cout << "Error in parsing : invalid format." << std::endl;
+		return 1;
+	}
+	return 0;
+}
+
+int	PmergeMe::parsinglst(int argc, char **argv) {
+
+	std::string			buf;
+	int					i = 0;
+
+	for(int j = 1; j < argc; j++) {
+		buf = argv[j];
+		i = 1;
+		if ( (buf.find_first_not_of("0123456789") != std::string::npos)
+			|| ( (buf.size() >= 10) && (buf > "2147483647") )
+			|| (buf.size() == 0) ) {
+			std::cout << "Error in parsing : invalid format." << std::endl;
+			return 1;
+		}
+		for(std::list<int>::iterator it = this->mylist.begin(); it != this->mylist.end(); it++) {
+			if (*it == atoi(buf.c_str())) {
+			 	std::cout << "Error in parsing : doubles are not allowed [" << *it << "]" << std::endl;
+				return 1;
+			}
+		}
 		this->mylist.push_back(atoi(buf.c_str()));
 	}
 	if (i == 0) {
@@ -349,20 +378,36 @@ void	PmergeMe::dispVec(void) {
 
 void	PmergeMe::dispVecSimple(void) {
 
-	for(size_t i = 0; i < this->myvector.size(); i++) {
+	size_t size = this->myvector.size();
+	for(size_t i = 0; (i < size) && (i < 4); i++) {
 		std::cout << this->myvector[i];
 		std::cout << ' ';
 	}
+	if(size == 5) {
+		std::cout << this->myvector.back();
+	}
+	if(size > 5)
+		std::cout << "[...]";
 	std::cout << std::endl;
+	//is_sorted c++11
+	//if(std::is_sorted(this->myvector.begin(), this->myvector.end()))
+	//	std::cout << "SORTED" << std::endl;
 	return ;
 }
 
 void	PmergeMe::dispLstSimple(void) {
 
-	for(size_t i = 0; i < this->mylist.size(); i++) {
+	size_t size = this->mylist.size();
+
+	for(size_t i = 0; (i < size) && (i < 4); i++) {
 		std::cout << *this->setlst(this->mylist, i);
 		std::cout << ' ';
 	}
+	if(size == 5) {
+		std::cout << this->mylist.back();
+	}
+	if(size > 5)
+		std::cout << "[...]";
 	std::cout << std::endl;
 	return ;
 }

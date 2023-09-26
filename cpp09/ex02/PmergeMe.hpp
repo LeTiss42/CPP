@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 13:07:36 by mravera           #+#    #+#             */
-/*   Updated: 2023/07/01 18:11:50 by mravera          ###   ########.fr       */
+/*   Updated: 2023/09/26 15:16:58 by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ public:
 	PmergeMe & operator=(PmergeMe const & rhs);
 	~PmergeMe(void);
 
-	int		parsing(int argc, char **argv);
+	int		parsingvec(int argc, char **argv);
+	int		parsinglst(int argc, char **argv);
 	int		execVector(void);
 	int		execList(void);
 	void	dispVec(void);

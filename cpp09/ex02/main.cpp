@@ -6,7 +6,7 @@
 /*   By: mravera <mravera@student.42lausanne.ch>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:05:44 by mravera           #+#    #+#             */
-/*   Updated: 2023/09/25 23:26:51 by mravera          ###   ########.fr       */
+/*   Updated: 2023/09/26 15:38:13by mravera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,25 +21,48 @@ int	dispBoth(PmergeMe &a) {
 	return 0;
 }
 
+int	dispArgs(int argc, char **argv) {
+
+	std::cout << "Before:  ";
+	for(int i = 1; (i < argc) && (i < 5); i++) {
+		std::cout << argv[i];
+		std::cout << ' ';
+	}
+	if(argc == 6) {
+		std::cout << argv[argc - 1];
+	}
+	else if(argc > 6)
+		std::cout << "[...]";
+	std::cout << std::endl;
+	return 0;
+}
+
 int main(int argc, char **argv) {
 
 	if(argc > 1) {
-		std::clock_t	startVect;
-		std::clock_t	startList;
+		std::clock_t	timevec;
+		std::clock_t	timelst;
 		PmergeMe a;
 
-		if(a.parsing(argc, argv))
+		//vector
+		timevec = std::clock();
+		if(a.parsingvec(argc, argv))
 			return 0;
-		dispBoth(a);
-		startVect = std::clock();
+		dispArgs(argc, argv);
 		a.execVector();
-		startVect = std::clock() - startVect;
-		startList = std::clock();
+		timevec = std::clock() - timevec;
+
+		//list
+		timelst = std::clock();
+		if(a.parsinglst(argc, argv))
+			return 0;
 		a.execList();
-		startList = std::clock() - startList;
-		dispBoth(a);
-		std::cout << "temps de process vector = " << startVect << std::endl;
-		std::cout << "temps de process list   = " << startList << std::endl;
+		timelst = std::clock() - timelst;
+
+		std::cout << "After:   ";
+		a.dispVecSimple();
+		std::cout << "Time to process a range of " << (argc - 1) << " elements with std::vector : " << (timevec / (CLOCKS_PER_SEC / 1000000)) << " usec" << std::endl;
+		std::cout << "Time to process a range of " << (argc - 1) << " elements with std::list   : " << (timelst / (CLOCKS_PER_SEC / 1000000)) << " usec" << std::endl;
 	}
 	else
 		std::cout << "This program needs at least one number" << std::endl;
